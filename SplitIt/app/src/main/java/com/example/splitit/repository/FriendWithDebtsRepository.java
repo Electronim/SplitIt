@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 
 import com.example.splitit.controller.ApplicationController;
 import com.example.splitit.dao.AppDatabase;
-import com.example.splitit.model.Friend;
 import com.example.splitit.model.FriendWithDebts;
 
 import java.util.List;
@@ -37,6 +36,28 @@ public class FriendWithDebtsRepository {
             super.onPostExecute(friendsWithDebts);
             listener.actionSuccess();
             listener.notifyRecyclerView(friendsWithDebts);
+        }
+    }
+
+    public void getFriendWithDebts(final OnRepositoryActionListener listener){
+        new GetFriendWithDebts(listener).execute();
+    }
+
+    private class GetFriendWithDebts extends AsyncTask<Long, Void, FriendWithDebts> {
+        OnRepositoryActionListener listener;
+
+        GetFriendWithDebts(OnRepositoryActionListener listener){
+            this.listener = listener;
+        }
+        @Override
+        protected FriendWithDebts doInBackground(Long ... ids) {
+            return appDatabase.friendWithDebtsDao().getFriendWithDebtsById(ids[0]);
+        }
+
+        @Override
+        protected void onPostExecute(FriendWithDebts friendWithDebts) {
+            super.onPostExecute(friendWithDebts);
+            listener.actionSuccess();
         }
     }
 }

@@ -13,15 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
 import com.example.splitit.model.Action;
+import com.example.splitit.repository.ActionRepository;
+import com.example.splitit.repository.GroupWithFriendsRepository;
+import com.example.splitit.repository.OnActivityRepositoryActionListener;
+import com.example.splitit.repository.OnRepositoryActionListener;
 import com.example.splitit.ui.adapter.ActionAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ActivityFragment extends Fragment {
+public class ActivityFragment extends Fragment implements OnActivityRepositoryActionListener {
     private static final String TAG = "ActivityFragment";
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView mActionRecyclerView;
+    private ActionAdapter mActiondapter;
+    private ActionRepository mActionRepository;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -32,14 +38,34 @@ public class ActivityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRecyclerView = view.findViewById(R.id.activity_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
+        mActionRepository = new ActionRepository(getContext());
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mActionRecyclerView = view.findViewById(R.id.activity_recycler_view);
+        mActionRecyclerView.setHasFixedSize(true);
+        mActionRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mAdapter = new ActionAdapter(new ArrayList<Action>());
-        mRecyclerView.setAdapter(mAdapter);
+        mActiondapter = new ActionAdapter(new ArrayList<Action>());
+        mActionRecyclerView.setAdapter(mActiondapter);
+
+        mActionRepository.getAllActions(ActivityFragment.this);
     }
 
 
+    @Override
+    public void notifyActionRecyclerView(List<Action> actionList) {
+        List<Action> actions = mActiondapter.getmActions();
+        actions.clear();
+        actions.addAll(actionList);
+        mActiondapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void actionSuccess() {
+
+    }
+
+    @Override
+    public void actionFailed(String message) {
+
+    }
 }

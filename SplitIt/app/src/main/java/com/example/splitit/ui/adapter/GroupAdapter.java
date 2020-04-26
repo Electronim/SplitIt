@@ -1,40 +1,42 @@
 package com.example.splitit.ui.adapter;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.splitit.model.Group;
+import com.example.splitit.R;
+import com.example.splitit.model.GroupWithFriends;
 
 import java.util.ArrayList;
 
-public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> {
-    private ArrayList<Group> mGroups;
+public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHolder> {
+    private ArrayList<GroupWithFriends> mGroups;
 
-    public ArrayList<Group> getGroups() {
-        return mGroups;
+    public GroupAdapter(ArrayList<GroupWithFriends> mGroups) {
+        this.mGroups = mGroups;
     }
 
-    public GroupAdapter(ArrayList<Group> mGroups) {
-        this.mGroups = mGroups;
+    public ArrayList<GroupWithFriends> getmGroups() {
+        return mGroups;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // TODO: create layout for group item
-//        View view = LayoutInflater.from(parent.getContext())
-//                .inflate();
-//        return new ViewHolder(view);
-
-        return null;
+    public GroupViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View groupView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.view_group, parent, false);
+        return new GroupViewHolder(groupView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
+        GroupWithFriends groupWithFriends = mGroups.get(position);
+        holder.groupName.setText(groupWithFriends.group.name);
+        holder.nrGroupParticipants.setText(groupWithFriends.friends.size());
     }
 
     @Override
@@ -42,9 +44,13 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
         return mGroups.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(@NonNull View itemView) {
+    public class GroupViewHolder extends RecyclerView.ViewHolder {
+        public TextView groupName, nrGroupParticipants;
+
+        public GroupViewHolder(@NonNull View itemView) {
             super(itemView);
+            this.groupName = itemView.findViewById(R.id.textView_groupName);
+            this.nrGroupParticipants = itemView.findViewById(R.id.textView_nrGroupParticipants);
         }
     }
 }

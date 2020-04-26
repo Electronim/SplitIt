@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Entity
 public class Friend implements Serializable {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "friend_id")
     public long id;
 
     @ColumnInfo(name = "name")

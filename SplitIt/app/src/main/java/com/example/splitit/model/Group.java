@@ -4,9 +4,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "Groups")
 public class Group {
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "group_id")
     public long id;
 
     @ColumnInfo(name = "name")

@@ -8,20 +8,21 @@ import androidx.room.PrimaryKey;
 public class Debt {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "debt_id")
     public long id;
 
-    @ColumnInfo(name = "user_id")
-    public long userId;
+    @ColumnInfo(name = "friend_debt_id")
+    public long friendId;
 
     @ColumnInfo(name = "group_id")
     public long groupId;
 
-    @ColumnInfo(name = "ammount")
-    public double ammount;
+    @ColumnInfo(name = "amount")
+    public double amount;
 
-    public Debt(long userId, long groupId, double ammount) {
-        this.userId = userId;
+    public Debt(long friendId, long groupId, double amount) {
+        this.friendId = friendId;
         this.groupId = groupId;
-        this.ammount = ammount;
+        this.amount = amount;
     }
 }

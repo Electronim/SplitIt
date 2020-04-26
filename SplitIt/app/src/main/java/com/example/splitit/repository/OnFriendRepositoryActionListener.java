@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface OnFriendRepositoryActionListener extends OnRepositoryActionListener{
 
-    void notifyRecyclerView(List<FriendWithDebts> friendsWithDebts);
+    void notifyFriendRecyclerView(List<FriendWithDebts> friendWithDebtsList);
 }

@@ -64,14 +64,14 @@ public class FriendRepository {
         }
     }
 
-    public void deleteStudent(final Long id, final OnFriendRepositoryActionListener listener){
-        new DeleteStudent(listener).execute(id);
+    public void deleteFriend(final Long id, final OnFriendRepositoryActionListener listener){
+        new DeleteFriend(listener).execute(id);
     }
 
-    private class DeleteStudent extends AsyncTask<Long, Void, List<Friend>>{
+    private class DeleteFriend extends AsyncTask<Long, Void, List<Friend>>{
         OnFriendRepositoryActionListener listener;
 
-        DeleteStudent(OnFriendRepositoryActionListener listener){
+        DeleteFriend(OnFriendRepositoryActionListener listener){
             this.listener = listener;
         }
 

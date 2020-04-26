@@ -1,17 +1,11 @@
 package com.example.splitit.model;
 
-import android.util.Pair;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 public class Friend {
-
     @PrimaryKey(autoGenerate = true)
     public long id;
 

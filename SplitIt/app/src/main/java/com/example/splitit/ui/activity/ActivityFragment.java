@@ -7,15 +7,41 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.splitit.R;
+import com.example.splitit.model.Action;
+import com.example.splitit.model.Group;
+import com.example.splitit.ui.groups.GroupAdapter;
+
+import java.util.ArrayList;
 
 public class ActivityFragment extends Fragment {
+    private static final String TAG = "ActivityFragment";
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_activity, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        textView.setText("Activity fragment!");
-        return root;
+        return inflater.inflate(R.layout.fragment_activity, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mRecyclerView = view.findViewById(R.id.activity_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        mAdapter = new ActionAdapter(new ArrayList<Action>());
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+
 }

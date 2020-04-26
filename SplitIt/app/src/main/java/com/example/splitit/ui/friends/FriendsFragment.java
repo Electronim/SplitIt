@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
+import com.example.splitit.model.Friend;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class FriendsFragment extends Fragment {
@@ -31,14 +33,12 @@ public class FriendsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mRecyclerView = view.findViewById();
+        mRecyclerView = view.findViewById(R.id.friends_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mAdapter = new FriendsAdapter(new ArrayList<>, this);
+        mAdapter = new FriendAdapter(new ArrayList<Friend>());
         mRecyclerView.setAdapter(mAdapter);
-
     }
-
 }

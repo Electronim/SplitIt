@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.splitit">
 
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <application
         android:name=".controller.ApplicationController"
         android:allowBackup="true"

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> {
     private ArrayList<Group> mGroups;
 
-    public ArrayList<Group> getmGroups() {
+    public ArrayList<Group> getGroups() {
         return mGroups;
     }
 

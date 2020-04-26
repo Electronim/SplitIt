@@ -11,19 +11,14 @@ public class Friend implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public long id;
 
-    @ColumnInfo(name = "first_name")
-    public String firstName;
-
-    // TODO: remove and leave only name!
-    @ColumnInfo(name = "last_name")
-    public String lastName;
+    @ColumnInfo(name = "name")
+    public String name;
 
     @ColumnInfo(name = "phone_number")
     public String phoneNumber;
 
-    public Friend(String firstName, String lastName, String phoneNumber){
-       this.firstName = firstName;
-       this.lastName = lastName;
+    public Friend(String name, String phoneNumber){
+       this.name = name;
        this.phoneNumber = phoneNumber;
     }
 }

@@ -70,7 +70,7 @@ public class AddFriendActivity extends AppCompatActivity implements OnRepository
             List<Contact> selectedContacts = ((ContactAdapter) mContactAdapter).getSelected();
 
             for(Contact contact: selectedContacts) {
-                Friend friend = new Friend(contact.name, contact.name, contact.phoneNumber);
+                Friend friend = new Friend(contact.name, contact.phoneNumber);
                 mFriendRepository.insertFriend(friend, AddFriendActivity.this);
             }
 
@@ -89,7 +89,7 @@ public class AddFriendActivity extends AppCompatActivity implements OnRepository
         ArrayList<Friend> currentFriends = friendsWithDebtsWrapper
                 .getFriends()
                 .stream()
-                .map(fwd -> new Friend(fwd.friend.firstName, fwd.friend.lastName, fwd.friend.phoneNumber))
+                .map(fwd -> new Friend(fwd.friend.name, fwd.friend.phoneNumber))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         ContentResolver contentResolver = this.getContentResolver();
@@ -125,7 +125,7 @@ public class AddFriendActivity extends AppCompatActivity implements OnRepository
                 // Log.d(TAG, "getContacts: contact -> " + ": id = " + id + "; name = " + name + "; phone = " + phone);
                 boolean exists = false;
                 for (Friend friend: currentFriends) {
-                    exists |= name.equals(friend.firstName) && phone.equals(friend.phoneNumber);
+                    exists |= name.equals(friend.name) && phone.equals(friend.phoneNumber);
                     if (exists) break;
                 }
 

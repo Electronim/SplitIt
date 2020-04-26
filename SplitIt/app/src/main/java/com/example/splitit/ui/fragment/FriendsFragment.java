@@ -54,8 +54,8 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
 //        mFriendRepository = new FriendRepository(getContext());
 //        mDebtRepository = new DebtRepository(getContext());
 //
-//        Friend friend1 = new Friend("Dan", "Darii", "079610248");
-//        Friend friend2 = new Friend("Vlad", "Darii", "079610248");
+//        Friend friend1 = new Friend("Dan Darii", "079610248");
+//        Friend friend2 = new Friend("Vlad Darii", "079610248");
 //
 //        Debt debt1 = new Debt( 3, 1, 55.5);
 //        Debt debt2 = new Debt( 3, 1, 55.5);
@@ -93,7 +93,7 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
     public void notifyRecyclerView(List<FriendWithDebts> friendWithDebts) {
         List<FriendWithDebts> sortedList = friendWithDebts
                 .stream()
-                .sorted((obA, obB) -> obA.friend.firstName.compareTo(obB.friend.firstName))
+                .sorted((obA, obB) -> obA.friend.name.compareTo(obB.friend.name))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         List<FriendWithDebts> friendWithDebtsList = mFriendAdapter.getFriends();

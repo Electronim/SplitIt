@@ -20,20 +20,9 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView_firstName"
+                android:id="@+id/textView_friend_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp"
-                android:paddingRight="10dp"
-                android:textColor="#4c4c4c"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/textView_lastName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView_firstName"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
@@ -44,7 +33,7 @@
                 android:id="@+id/textView_ammount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textView_lastName"
+                android:layout_below="@id/textView_friend_name"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"

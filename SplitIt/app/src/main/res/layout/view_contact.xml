@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+        android:id="@+id/contact_card_view"
         android:layout_width="match_parent"
-        android:layout_height="99dp"
+        android:layout_height="62dp"
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:elevation="3dp"
@@ -20,7 +21,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView_firstName"
+                android:id="@+id/contact_name_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
@@ -30,25 +31,15 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/textView_lastName"
+                android:id="@+id/contact_phone_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textView_firstName"
+                android:layout_below="@id/contact_name_text_view"
                 android:paddingLeft="10dp"
                 android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:textColor="#4c4c4c"
                 android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/textView_ammount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/textView_lastName"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="5dp"
-                android:textSize="12sp" />
 
         </RelativeLayout>
 

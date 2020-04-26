@@ -4,14 +4,17 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class Friend {
+public class Friend implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public long id;
 
     @ColumnInfo(name = "first_name")
     public String firstName;
 
+    // TODO: remove and leave only name!
     @ColumnInfo(name = "last_name")
     public String lastName;
 

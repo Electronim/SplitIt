@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder> {
     private ArrayList<Action> mActions;
 
-    public ArrayList<Action> getmActions() {
+    public ArrayList<Action> getActions() {
         return mActions;
     }
 

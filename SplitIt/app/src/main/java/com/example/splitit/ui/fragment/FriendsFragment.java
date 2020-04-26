@@ -1,6 +1,7 @@
 package com.example.splitit.ui.fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +9,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
 import com.example.splitit.model.FriendWithDebts;
+import com.example.splitit.model.wrappers.FriendsWithDebtsWrapper;
 import com.example.splitit.repository.DebtRepository;
 import com.example.splitit.repository.FriendRepository;
 import com.example.splitit.repository.FriendWithDebtsRepository;
@@ -24,9 +27,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FriendsFragment extends Fragment implements OnFriendRepositoryActionListener {
     private static final String TAG = "FriendsFragment";
+    public static final String FriendListExtra = "friend_list";
 
     private RecyclerView mFriendRecyclerView;
     private FriendAdapter mFriendAdapter;
@@ -76,16 +81,24 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddFriendActivity.class);
+                FriendsWithDebtsWrapper friendsWrapper = new FriendsWithDebtsWrapper(mFriendAdapter.getFriends());
+                intent.putExtra(FriendListExtra, friendsWrapper);
                 startActivity(intent);
             }
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void notifyRecyclerView(List<FriendWithDebts> friendsWithDebts) {
-        List<FriendWithDebts> friendWithDebtsList = mFriendAdapter.getmFriends();
+    public void notifyRecyclerView(List<FriendWithDebts> friendWithDebts) {
+        List<FriendWithDebts> sortedList = friendWithDebts
+                .stream()
+                .sorted((obA, obB) -> obA.friend.firstName.compareTo(obB.friend.firstName))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        List<FriendWithDebts> friendWithDebtsList = mFriendAdapter.getFriends();
         friendWithDebtsList.clear();
-        friendWithDebtsList.addAll(friendsWithDebts);
+        friendWithDebtsList.addAll(sortedList);
         mFriendAdapter.notifyDataSetChanged();
     }
 

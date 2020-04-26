@@ -22,7 +22,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         this.mFriends = mFriends;
     }
 
-    public ArrayList<FriendWithDebts> getmFriends() {
+    public ArrayList<FriendWithDebts> getFriends() {
         return mFriends;
     }
 
@@ -41,7 +41,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         holder.friendFirstName.setText(friendWithDebts.friend.firstName);
         holder.friendLastName.setText(friendWithDebts.friend.lastName);
         final long friendId = friendWithDebts.friend.id;
-        Double ammount = friendWithDebts.detbs.stream().filter(p -> p.userId == friendId).mapToDouble(p -> p.ammount).sum();
+        Double ammount = friendWithDebts.debts.stream().filter(p -> p.userId == friendId).mapToDouble(p -> p.ammount).sum();
         holder.friendAmmount.setText(ammount.toString());
     }
 

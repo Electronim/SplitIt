@@ -1,5 +1,6 @@
 package com.example.splitit.ui.friends;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
     private FriendWithDebtsRepository mFriendWithDebtRepository;
     private FriendRepository mFriendRepository;
     private DebtRepository mDebtRepository;
+    private FloatingActionButton floatingActionButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +70,15 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
         mFriendRecyclerView.setAdapter(mFriendAdapter);
 
         mFriendWithDebtRepository.getAllFriendsWithDebts(FriendsFragment.this);
+        
+        floatingActionButton = view.findViewById(R.id.fab_friends);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddFriendActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

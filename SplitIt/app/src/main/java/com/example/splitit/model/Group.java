@@ -12,8 +12,7 @@ public class Group {
     @ColumnInfo(name = "name")
     public String name;
 
-    public Group(long id, String name) {
-        this.id = id;
+    public Group(String name) {
         this.name = name;
     }
 }

@@ -19,8 +19,7 @@ public class Debt {
     @ColumnInfo(name = "ammount")
     public double ammount;
 
-    public Debt(long id, long userId, long groupId, double ammount) {
-        this.id = id;
+    public Debt(long userId, long groupId, double ammount) {
         this.userId = userId;
         this.groupId = groupId;
         this.ammount = ammount;

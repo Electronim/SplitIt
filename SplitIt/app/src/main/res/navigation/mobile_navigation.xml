@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_friends"
-        android:name="com.example.splitit.ui.friends.FriendsFragment"
+        android:name="com.example.splitit.ui.fragment.FriendsFragment"
         android:label="@string/title_friends"
         tools:layout="@layout/fragment_friends" />
 
     <fragment
         android:id="@+id/navigation_groups"
-        android:name="com.example.splitit.ui.groups.GroupsFragment"
+        android:name="com.example.splitit.ui.fragment.GroupsFragment"
         android:label="@string/title_groups"
         tools:layout="@layout/fragment_groups" />
 
     <fragment
         android:id="@+id/navigation_activity"
-        android:name="com.example.splitit.ui.activity.ActivityFragment"
+        android:name="com.example.splitit.ui.fragment.ActivityFragment"
         android:label="@string/title_activity"
         tools:layout="@layout/fragment_activity" />
 </navigation>

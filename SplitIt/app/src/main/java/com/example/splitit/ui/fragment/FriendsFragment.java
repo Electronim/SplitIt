@@ -1,5 +1,6 @@
-package com.example.splitit.ui.friends;
+package com.example.splitit.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
-import com.example.splitit.model.Debt;
-import com.example.splitit.model.Friend;
 import com.example.splitit.model.FriendWithDebts;
 import com.example.splitit.repository.DebtRepository;
 import com.example.splitit.repository.FriendRepository;
 import com.example.splitit.repository.FriendWithDebtsRepository;
 import com.example.splitit.repository.OnFriendRepositoryActionListener;
+import com.example.splitit.ui.activity.AddFriendActivity;
+import com.example.splitit.ui.adapter.FriendAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
     private FriendWithDebtsRepository mFriendWithDebtRepository;
     private FriendRepository mFriendRepository;
     private DebtRepository mDebtRepository;
+    private FloatingActionButton mFloatingButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,12 +49,12 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
 //        mFriendRepository = new FriendRepository(getContext());
 //        mDebtRepository = new DebtRepository(getContext());
 //
-//        Friend friend1 = new Friend(1,"Dan", "Darii", "079610248");
-//        Friend friend2 = new Friend(2,"Vlad", "Darii", "079610248");
+//        Friend friend1 = new Friend("Dan", "Darii", "079610248");
+//        Friend friend2 = new Friend("Vlad", "Darii", "079610248");
 //
-//        Debt debt1 = new Debt(1, 1, 1, 55.5);
-//        Debt debt2 = new Debt(2, 1, 1, 55.5);
-//        Debt debt3 = new Debt(3, 2, 1, 55.5);
+//        Debt debt1 = new Debt( 3, 1, 55.5);
+//        Debt debt2 = new Debt( 3, 1, 55.5);
+//        Debt debt3 = new Debt( 4, 1, 55.5);
 //
 //        mFriendRepository.insertFriend(friend1, FriendsFragment.this);
 //        mFriendRepository.insertFriend(friend2, FriendsFragment.this);
@@ -67,6 +70,15 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
         mFriendRecyclerView.setAdapter(mFriendAdapter);
 
         mFriendWithDebtRepository.getAllFriendsWithDebts(FriendsFragment.this);
+        
+        mFloatingButton = view.findViewById(R.id.fab_friends);
+        mFloatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddFriendActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

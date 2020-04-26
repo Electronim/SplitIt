@@ -17,8 +17,7 @@ public class Action {
     @ColumnInfo(name = "timestamp")
     public Timestamp timestamp;
 
-    public Action(long id, String message, Timestamp timestamp) {
-        this.id = id;
+    public Action(String message, Timestamp timestamp) {
         this.message = message;
         this.timestamp = timestamp;
     }

@@ -16,14 +16,14 @@ public class FriendRepository {
         this.appDatabase = ApplicationController.getAppDatabase();
     }
 
-    public void insertFriend(final Friend friend, final OnFriendRepositoryActionListener listener){
+    public void insertFriend(final Friend friend, final OnRepositoryActionListener listener){
         new InsertFriend(listener).execute(friend);
     }
 
     private class InsertFriend extends AsyncTask<Friend, Void, List<Friend>> {
-        OnFriendRepositoryActionListener listener;
+        OnRepositoryActionListener listener;
 
-        InsertFriend(OnFriendRepositoryActionListener listener){
+        InsertFriend(OnRepositoryActionListener listener){
             this.listener = listener;
         }
 
@@ -37,18 +37,17 @@ public class FriendRepository {
         protected void onPostExecute(List<Friend> friends) {
             super.onPostExecute(friends);
             listener.actionSuccess();
-            listener.notifyRecyclerView(friends);
         }
     }
 
-    public void getAllFriends(final OnFriendRepositoryActionListener listener){
+    public void getAllFriends(final OnRepositoryActionListener listener){
         new GetAllFriends(listener).execute();
     }
 
     private class GetAllFriends extends AsyncTask<Void, Void, List<Friend>> {
-        OnFriendRepositoryActionListener listener;
+        OnRepositoryActionListener listener;
 
-        GetAllFriends(OnFriendRepositoryActionListener listener){
+        GetAllFriends(OnRepositoryActionListener listener){
             this.listener = listener;
         }
         @Override
@@ -60,18 +59,17 @@ public class FriendRepository {
         protected void onPostExecute(List<Friend> friends) {
             super.onPostExecute(friends);
             listener.actionSuccess();
-            listener.notifyRecyclerView(friends);
         }
     }
 
-    public void deleteFriend(final Long id, final OnFriendRepositoryActionListener listener){
+    public void deleteFriend(final Long id, final OnRepositoryActionListener listener){
         new DeleteFriend(listener).execute(id);
     }
 
     private class DeleteFriend extends AsyncTask<Long, Void, List<Friend>>{
-        OnFriendRepositoryActionListener listener;
+        OnRepositoryActionListener listener;
 
-        DeleteFriend(OnFriendRepositoryActionListener listener){
+        DeleteFriend(OnRepositoryActionListener listener){
             this.listener = listener;
         }
 
@@ -87,7 +85,6 @@ public class FriendRepository {
         protected void onPostExecute(List<Friend> friends) {
             super.onPostExecute(friends);
             listener.actionSuccess();
-            listener.notifyRecyclerView(friends);
         }
     }
 }

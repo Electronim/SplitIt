@@ -6,8 +6,8 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_friend"
-        android:layout_width="match_parent"
+        android:id="@+id/card_view_group"
+        android:layout_width="139dp"
         android:layout_height="99dp"
         android:layout_gravity="center"
         android:layout_margin="5dp"
@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView_friend_name"
+                android:id="@+id/textView_groupName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
@@ -30,10 +30,10 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/textView_amount"
+                android:id="@+id/textView_nrGroupParticipants"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/textView_friend_name"
+                android:layout_below="@id/textView_groupName"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp"

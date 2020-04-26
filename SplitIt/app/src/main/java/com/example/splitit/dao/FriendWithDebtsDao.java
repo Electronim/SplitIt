@@ -16,6 +16,6 @@ public interface FriendWithDebtsDao {
     List<FriendWithDebts> getAllFriendsWithDebts();
 
     @Transaction
-    @Query("Select * from Friend where id = :id limit 1")
+    @Query("Select * from Friend where friend_id = :id limit 1")
     FriendWithDebts getFriendWithDebtsById(long id);
 }

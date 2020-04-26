@@ -15,7 +15,7 @@ public interface DebtDao {
     @Query("Select * from Debt")
     List<Debt> getAllDebts();
 
-    @Query("Select * from Debt where id = :id limit 1")
+    @Query("Select * from Debt where debt_id = :id limit 1")
     Debt getDebtById(long id);
 
     @Insert

@@ -39,9 +39,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
     public void onBindViewHolder(@NonNull FriendViewHolder holder, int position) {
         FriendWithDebts friendWithDebts = mFriends.get(position);
         holder.friendName.setText(friendWithDebts.friend.name);
-        final long friendId = friendWithDebts.friend.id;
-        Double ammount = friendWithDebts.debts.stream().filter(p -> p.userId == friendId).mapToDouble(p -> p.ammount).sum();
-        holder.friendAmmount.setText(ammount.toString());
+        final long friendDebtId = friendWithDebts.friend.id;
+        Double amount = friendWithDebts.debts.stream().filter(p -> p.friendId == friendDebtId).mapToDouble(p -> p.amount).sum();
+        holder.friendAmount.setText(amount.toString());
     }
 
     @Override
@@ -50,12 +50,12 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
     }
 
     public class FriendViewHolder extends RecyclerView.ViewHolder {
-        public TextView friendName, friendAmmount;
+        public TextView friendName, friendAmount;
 
         public FriendViewHolder(@NonNull View itemView) {
             super(itemView);
             this.friendName = itemView.findViewById(R.id.textView_friend_name);
-            this.friendAmmount = itemView.findViewById(R.id.textView_ammount);
+            this.friendAmount = itemView.findViewById(R.id.textView_amount);
         }
     }
 }

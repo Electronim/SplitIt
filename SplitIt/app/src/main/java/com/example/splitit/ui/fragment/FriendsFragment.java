@@ -35,7 +35,7 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
 
     private RecyclerView mFriendRecyclerView;
     private FriendAdapter mFriendAdapter;
-    private FriendWithDebtsRepository mFriendWithDebtRepository;
+    private FriendWithDebtsRepository mFriendWithDebtsRepository;
     private FriendRepository mFriendRepository;
     private DebtRepository mDebtRepository;
     private FloatingActionButton mFloatingButton;
@@ -48,7 +48,7 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mFriendWithDebtRepository = new FriendWithDebtsRepository(getContext());
+        mFriendWithDebtsRepository = new FriendWithDebtsRepository(getContext());
 
         // TODO: Remove these comments after we are able to insert Friends from Contacts;
 //        mFriendRepository = new FriendRepository(getContext());
@@ -74,7 +74,7 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
         mFriendAdapter = new FriendAdapter(new ArrayList<FriendWithDebts>());
         mFriendRecyclerView.setAdapter(mFriendAdapter);
 
-        mFriendWithDebtRepository.getAllFriendsWithDebts(FriendsFragment.this);
+        mFriendWithDebtsRepository.getAllFriendsWithDebts(FriendsFragment.this);
         
         mFloatingButton = view.findViewById(R.id.fab_friends);
         mFloatingButton.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +90,7 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void notifyRecyclerView(List<FriendWithDebts> friendWithDebts) {
+    public void notifyFriendRecyclerView(List<FriendWithDebts> friendWithDebts) {
         List<FriendWithDebts> sortedList = friendWithDebts
                 .stream()
                 .sorted((obA, obB) -> obA.friend.name.compareTo(obB.friend.name))

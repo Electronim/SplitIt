@@ -10,7 +10,7 @@ public class FriendWithDebts {
     public Friend friend;
     @Relation(
             parentColumn = "id",
-            entityColumn = "userId"
+            entityColumn = "user_id"
     )
-    public List<Friend> detbs;
+    public List<Debt> detbs;
 }

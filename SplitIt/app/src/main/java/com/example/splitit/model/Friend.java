@@ -18,8 +18,6 @@ public class Friend {
     @ColumnInfo(name = "phone_number")
     public String phoneNumber;
 
-//    public List<Integer> debts = new ArrayList<>();
-
     public Friend(long id, String firstName, String lastName, String phoneNumber){
        this.id = id;
        this.firstName = firstName;

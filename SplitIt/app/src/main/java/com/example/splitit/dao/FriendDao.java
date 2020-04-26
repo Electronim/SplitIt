@@ -12,10 +12,10 @@ import java.util.List;
 @Dao
 public interface FriendDao {
 
-    @Query("Select * from friend")
+    @Query("Select * from Friend")
     List<Friend> getAllFriends();
 
-    @Query("Select * from friend where id = :id limit 1")
+    @Query("Select * from Friend where id = :id limit 1")
     Friend getFriendById(long id);
 
     @Insert

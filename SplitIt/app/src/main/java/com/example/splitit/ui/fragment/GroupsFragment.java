@@ -1,4 +1,4 @@
-package com.example.splitit.ui.groups;
+package com.example.splitit.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
 import com.example.splitit.model.Group;
+import com.example.splitit.ui.adapter.GroupAdapter;
 
 import java.util.ArrayList;
 

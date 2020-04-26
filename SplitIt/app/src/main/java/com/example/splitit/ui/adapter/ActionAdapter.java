@@ -1,4 +1,4 @@
-package com.example.splitit.ui.groups;
+package com.example.splitit.ui.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -6,25 +6,25 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.splitit.model.Group;
+import com.example.splitit.model.Action;
 
 import java.util.ArrayList;
 
-public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> {
-    private ArrayList<Group> mGroups;
+public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ViewHolder> {
+    private ArrayList<Action> mActions;
 
-    public ArrayList<Group> getmGroups() {
-        return mGroups;
+    public ArrayList<Action> getmActions() {
+        return mActions;
     }
 
-    public GroupAdapter(ArrayList<Group> mGroups) {
-        this.mGroups = mGroups;
+    public ActionAdapter(ArrayList<Action> mActions) {
+        this.mActions = mActions;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // TODO: create layout for group item
+        // TODO: create layout for action item
 //        View view = LayoutInflater.from(parent.getContext())
 //                .inflate();
 //        return new ViewHolder(view);
@@ -39,7 +39,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return mGroups.size();
+        return mActions.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

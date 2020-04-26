@@ -1,4 +1,4 @@
-package com.example.splitit.ui.friends;
+package com.example.splitit.ui.adapter;
 
 import android.os.Build;
 import android.view.LayoutInflater;

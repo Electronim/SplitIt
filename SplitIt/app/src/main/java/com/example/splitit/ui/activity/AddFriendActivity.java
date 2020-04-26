@@ -1,4 +1,4 @@
-package com.example.splitit.ui.friends;
+package com.example.splitit.ui.activity;
 
 import android.os.Bundle;
 
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
 import com.example.splitit.model.Contact;
+import com.example.splitit.ui.adapter.ContactAdapter;
 
 import java.util.ArrayList;
 

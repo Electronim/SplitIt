@@ -18,8 +18,7 @@ public class Friend {
     @ColumnInfo(name = "phone_number")
     public String phoneNumber;
 
-    public Friend(long id, String firstName, String lastName, String phoneNumber){
-       this.id = id;
+    public Friend(String firstName, String lastName, String phoneNumber){
        this.firstName = firstName;
        this.lastName = lastName;
        this.phoneNumber = phoneNumber;

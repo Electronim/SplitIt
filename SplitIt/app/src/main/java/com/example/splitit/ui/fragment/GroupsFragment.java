@@ -1,9 +1,15 @@
 package com.example.splitit.ui.fragment;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +24,7 @@ import com.example.splitit.repository.GroupWithFriendsRepository;
 import com.example.splitit.repository.OnGroupRepositoryActionListener;
 import com.example.splitit.repository.OnRepositoryActionListener;
 import com.example.splitit.ui.adapter.GroupAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +36,7 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
     private RecyclerView mGroupRecyclerView;
     private GroupAdapter mGroupAdapter;
     private GroupWithFriendsRepository mGroupWithFriendsRepository;
+    private FloatingActionButton mAddGroupFloatingButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,10 +53,37 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
         mGroupRecyclerView.setHasFixedSize(true);
         mGroupRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mGroupAdapter = new GroupAdapter(new ArrayList<GroupWithFriends>());
+        mGroupAdapter = new GroupAdapter(new ArrayList<>());
         mGroupRecyclerView.setAdapter(mGroupAdapter);
 
         mGroupWithFriendsRepository.getAllGroupWithFriends(GroupsFragment.this);
+
+        mAddGroupFloatingButton = view.findViewById(R.id.fab_groups);
+        mAddGroupFloatingButton.setOnClickListener(v -> {
+            showAddGroupDialog();
+        });
+    }
+
+    private void showAddGroupDialog() {
+        final AlertDialog dialogBuilder = new AlertDialog.Builder(getContext()).create();
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_add_group, null);
+
+        final EditText groupNameEditText = dialogView.findViewById(R.id.edit_text_group_name);
+        Button submitButton = dialogView.findViewById(R.id.button_submit);
+        Button cancelButton = dialogView.findViewById(R.id.button_cancel);
+
+        submitButton.setOnClickListener(v -> {
+            // TODO: save 'em
+            dialogBuilder.dismiss();
+        });
+
+        cancelButton.setOnClickListener(v -> {
+            dialogBuilder.dismiss();
+        });
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.show();
     }
 
     @Override

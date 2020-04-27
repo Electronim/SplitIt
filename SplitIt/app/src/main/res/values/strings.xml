@@ -4,4 +4,8 @@
     <string name="title_groups">Groups</string>
     <string name="title_activity">Activity</string>
     <string name="add_friends">Add friends</string>
+    <string name="label_add_group">Add a new group</string>
+    <string name="label_type_group_name">Type the group name</string>
+    <string name="label_submit">Submit</string>
+    <string name="label_cancel">Cancel</string>
 </resources>

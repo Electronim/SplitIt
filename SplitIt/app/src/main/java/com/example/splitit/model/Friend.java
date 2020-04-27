@@ -26,11 +26,15 @@ public class Friend implements Serializable {
        this.phoneNumber = phoneNumber;
     }
 
-    public JSONObject toJson() throws JSONException{
+    public JSONObject toJson(){
         JSONObject friendJson = new JSONObject();
 
-        friendJson.put("name", name);
-        friendJson.put("phone_number", phoneNumber);
+        try {
+            friendJson.put("name", name);
+            friendJson.put("phone_number", phoneNumber);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return friendJson;
     }

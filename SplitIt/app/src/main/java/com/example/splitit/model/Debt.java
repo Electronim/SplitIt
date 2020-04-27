@@ -29,12 +29,16 @@ public class Debt {
         this.amount = amount;
     }
 
-    public JSONObject toJson() throws JSONException {
+    public JSONObject toJson() {
         JSONObject debtJson = new JSONObject();
 
-        debtJson.put("friend_debt_id", friendId);
-        debtJson.put("group_id", groupId);
-        debtJson.put("amount", amount);
+        try {
+            debtJson.put("friend_debt_id", friendId);
+            debtJson.put("group_id", groupId);
+            debtJson.put("amount", amount);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return debtJson;
     }

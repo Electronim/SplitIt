@@ -15,7 +15,9 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract FriendDao friendDao();
     public abstract DebtDao debtDao();
     public abstract FriendWithDebtsDao friendWithDebtsDao();
+    public abstract GroupDao groupDao();
     public abstract GroupWithFriendsDao groupWithFriendsDao();
     public abstract ActionDao actionDao();
+    public abstract GroupFriendCrossRefDao groupFriendCrossRefDao();
 
 }

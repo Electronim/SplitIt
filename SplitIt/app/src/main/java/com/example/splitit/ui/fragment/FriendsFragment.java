@@ -67,12 +67,9 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
         mFriendWithDebtsRepository.getAllFriendsWithDebts(FriendsFragment.this);
         
         mAddFriendFloatingButton = view.findViewById(R.id.fab_friends);
-        mAddFriendFloatingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // request permissions if they are not granted
-                checkPermission(Manifest.permission.READ_CONTACTS, CONTACTS_PERMISSION_CODE);
-            }
+        mAddFriendFloatingButton.setOnClickListener(v -> {
+            // request permissions if they are not granted
+            checkPermission(Manifest.permission.READ_CONTACTS, CONTACTS_PERMISSION_CODE);
         });
     }
 

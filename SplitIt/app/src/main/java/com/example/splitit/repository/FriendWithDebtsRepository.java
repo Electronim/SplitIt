@@ -35,7 +35,7 @@ public class FriendWithDebtsRepository {
         protected void onPostExecute(List<FriendWithDebts> friendsWithDebts) {
             super.onPostExecute(friendsWithDebts);
             listener.actionSuccess();
-            listener.notifyFriendRecyclerView(friendsWithDebts);
+            listener.processFriendWithDebtsDBList(friendsWithDebts);
         }
     }
 

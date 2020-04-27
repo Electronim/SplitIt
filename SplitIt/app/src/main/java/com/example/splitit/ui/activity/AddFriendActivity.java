@@ -72,7 +72,6 @@ public class AddFriendActivity extends AppCompatActivity implements OnRepository
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

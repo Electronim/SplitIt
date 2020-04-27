@@ -25,7 +25,10 @@
 
         <activity
             android:name=".ui.activity.AddFriendActivity">
+        </activity>
 
+        <activity
+            android:name=".ui.activity.GroupInfoActivity">
         </activity>
     </application>
 

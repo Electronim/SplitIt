@@ -80,7 +80,6 @@ public class DebtRepository {
             return appDatabase.debtDao().getAllDebts();
         }
 
-
         @Override
         protected void onPostExecute(List<Debt> debts) {
             super.onPostExecute(debts);

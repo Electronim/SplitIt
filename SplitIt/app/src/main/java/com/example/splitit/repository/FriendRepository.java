@@ -80,7 +80,6 @@ public class FriendRepository {
             return appDatabase.friendDao().getAllFriends();
         }
 
-
         @Override
         protected void onPostExecute(List<Friend> friends) {
             super.onPostExecute(friends);

@@ -45,7 +45,7 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
     private FriendWithDebtsRepository mFriendWithDebtsRepository;
     private FriendRepository mFriendRepository;
     private DebtRepository mDebtRepository;
-    private FloatingActionButton mFloatingButton;
+    private FloatingActionButton mAddFriendFloatingButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -57,39 +57,19 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
         super.onViewCreated(view, savedInstanceState);
         mFriendWithDebtsRepository = new FriendWithDebtsRepository(getContext());
 
-        // TODO: Remove these comments after we are able to insert Friends from Contacts;
-//        mFriendRepository = new FriendRepository(getContext());
-//        mDebtRepository = new DebtRepository(getContext());
-//
-//        Friend friend1 = new Friend("Dan Darii", "079610248");
-//        Friend friend2 = new Friend("Vlad Darii", "079610248");
-//
-//        Debt debt1 = new Debt( 3, 1, 55.5);
-//        Debt debt2 = new Debt( 3, 1, 55.5);
-//        Debt debt3 = new Debt( 4, 1, 55.5);
-//
-//        mFriendRepository.insertFriend(friend1, FriendsFragment.this);
-//        mFriendRepository.insertFriend(friend2, FriendsFragment.this);
-//        mDebtRepository.insertDebt(debt1, FriendsFragment.this);
-//        mDebtRepository.insertDebt(debt2, FriendsFragment.this);
-//        mDebtRepository.insertDebt(debt3, FriendsFragment.this);
-
         mFriendRecyclerView = view.findViewById(R.id.friends_recycler_view);
         mFriendRecyclerView.setHasFixedSize(true);
         mFriendRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mFriendAdapter = new FriendAdapter(new ArrayList<FriendWithDebts>());
+        mFriendAdapter = new FriendAdapter(new ArrayList<>());
         mFriendRecyclerView.setAdapter(mFriendAdapter);
 
         mFriendWithDebtsRepository.getAllFriendsWithDebts(FriendsFragment.this);
         
-        mFloatingButton = view.findViewById(R.id.fab_friends);
-        mFloatingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // request permissions if they are not granted
-                checkPermission(Manifest.permission.READ_CONTACTS, CONTACTS_PERMISSION_CODE);
-            }
+        mAddFriendFloatingButton = view.findViewById(R.id.fab_friends);
+        mAddFriendFloatingButton.setOnClickListener(v -> {
+            // request permissions if they are not granted
+            checkPermission(Manifest.permission.READ_CONTACTS, CONTACTS_PERMISSION_CODE);
         });
     }
 
@@ -135,7 +115,7 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void notifyFriendRecyclerView(List<FriendWithDebts> friendWithDebts) {
+    public void processFriendWithDebtsDBList(List<FriendWithDebts> friendWithDebts) {
         List<FriendWithDebts> sortedList = friendWithDebts
                 .stream()
                 .sorted((obA, obB) -> obA.friend.name.compareTo(obB.friend.name))

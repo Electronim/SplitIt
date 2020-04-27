@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @Entity
 public class Debt {
 
@@ -24,5 +27,15 @@ public class Debt {
         this.friendId = friendId;
         this.groupId = groupId;
         this.amount = amount;
+    }
+
+    public JSONObject toJson() throws JSONException {
+        JSONObject debtJson = new JSONObject();
+
+        debtJson.put("friend_debt_id", friendId);
+        debtJson.put("group_id", groupId);
+        debtJson.put("amount", amount);
+
+        return debtJson;
     }
 }

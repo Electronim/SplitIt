@@ -115,7 +115,7 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void notifyFriendRecyclerView(List<FriendWithDebts> friendWithDebts) {
+    public void processFriendWithDebtsDBList(List<FriendWithDebts> friendWithDebts) {
         List<FriendWithDebts> sortedList = friendWithDebts
                 .stream()
                 .sorted((obA, obB) -> obA.friend.name.compareTo(obB.friend.name))

@@ -47,29 +47,29 @@ public class GroupWithFriendsRepository {
         }
     }
 
-    public void getGroupWithFriendsById(Long id, final OnGroupFriendRepositoryActionListener listener){
-        new GetGroupWithFriendsById(listener).execute(id);
-    }
-
-    private class GetGroupWithFriendsById extends AsyncTask<Long, Void, GroupWithFriends> {
-        OnGroupFriendRepositoryActionListener listener;
-
-        GetGroupWithFriendsById(OnGroupFriendRepositoryActionListener listener){
-            this.listener = listener;
-        }
-        @Override
-        protected GroupWithFriends doInBackground(Long ... ids) {
-            return appDatabase.groupWithFriendsDao().getGroupWithFriendsById(ids[0]);
-        }
-
-        @RequiresApi(api = Build.VERSION_CODES.N)
-        @Override
-        protected void onPostExecute(GroupWithFriends groupWithFriends) {
-            super.onPostExecute(groupWithFriends);
-            listener.actionSuccess();
-
-            List<Long> resultList = groupWithFriends.friends.stream().map(gwf -> gwf.id).collect(Collectors.toList());
-            listener.notifyGroupFriendRecyclerView(resultList);
-        }
-    }
+//    public void getGroupWithFriendsById(Long id, final OnGroupFriendRepositoryActionListener listener){
+//        new GetGroupWithFriendsById(listener).execute(id);
+//    }
+//
+//    private class GetGroupWithFriendsById extends AsyncTask<Long, Void, GroupWithFriends> {
+//        OnGroupFriendRepositoryActionListener listener;
+//
+//        GetGroupWithFriendsById(OnGroupFriendRepositoryActionListener listener){
+//            this.listener = listener;
+//        }
+//        @Override
+//        protected GroupWithFriends doInBackground(Long ... ids) {
+//            return appDatabase.groupWithFriendsDao().getGroupWithFriendsById(ids[0]);
+//        }
+//
+//        @RequiresApi(api = Build.VERSION_CODES.N)
+//        @Override
+//        protected void onPostExecute(GroupWithFriends groupWithFriends) {
+//            super.onPostExecute(groupWithFriends);
+//            listener.actionSuccess();
+//
+//            List<Long> resultList = groupWithFriends.friends.stream().map(gwf -> gwf.id).collect(Collectors.toList());
+//            listener.notifyGroupFriendRecyclerView(resultList);
+//        }
+//    }
 }

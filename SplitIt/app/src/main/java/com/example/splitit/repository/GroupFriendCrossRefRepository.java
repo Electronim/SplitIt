@@ -40,4 +40,31 @@ public class GroupFriendCrossRefRepository {
             listener.actionSuccess();
         }
     }
+
+    public void deleteGroupFriend(final GroupFriendCrossRef groupFriendCrossRef,
+                                  final OnRepositoryActionListener listener) {
+        new DeleteGroupFriend(listener).execute(groupFriendCrossRef);
+    }
+
+    private class DeleteGroupFriend extends AsyncTask<GroupFriendCrossRef, Void, List<GroupFriendCrossRef>> {
+        OnRepositoryActionListener listener;
+
+        DeleteGroupFriend(OnRepositoryActionListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        protected List<GroupFriendCrossRef> doInBackground(GroupFriendCrossRef... groupFriendCrossRefs) {
+            GroupFriendCrossRef groupFriend = appDatabase.groupFriendCrossRefDao()
+                    .getGroupFriendById(groupFriendCrossRefs[0].group_id, groupFriendCrossRefs[0].friend_id);
+            appDatabase.groupFriendCrossRefDao().deleteGroupFriend(groupFriend);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<GroupFriendCrossRef> groupFriendCrossRefs) {
+            super.onPostExecute(groupFriendCrossRefs);
+            listener.actionSuccess();
+        }
+    }
 }

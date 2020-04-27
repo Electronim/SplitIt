@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 @Entity
@@ -21,5 +24,14 @@ public class Friend implements Serializable {
     public Friend(String name, String phoneNumber){
        this.name = name;
        this.phoneNumber = phoneNumber;
+    }
+
+    public JSONObject toJson() throws JSONException{
+        JSONObject friendJson = new JSONObject();
+
+        friendJson.put("name", name);
+        friendJson.put("phone_number", phoneNumber);
+
+        return friendJson;
     }
 }

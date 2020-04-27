@@ -1,15 +1,21 @@
 package com.example.splitit.ui.fragment;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,7 +37,8 @@ import java.util.stream.Collectors;
 
 public class FriendsFragment extends Fragment implements OnFriendRepositoryActionListener {
     private static final String TAG = "FriendsFragment";
-    public static final String FriendListExtra = "friend_list";
+    private static final int CONTACTS_PERMISSION_CODE = 100;
+    public static final String FRIEND_LIST_EXTRA = "friend_list";
 
     private RecyclerView mFriendRecyclerView;
     private FriendAdapter mFriendAdapter;
@@ -80,12 +87,50 @@ public class FriendsFragment extends Fragment implements OnFriendRepositoryActio
         mFloatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddFriendActivity.class);
-                FriendsWithDebtsWrapper friendsWrapper = new FriendsWithDebtsWrapper(mFriendAdapter.getFriends());
-                intent.putExtra(FriendListExtra, friendsWrapper);
-                startActivity(intent);
+                // request permissions if they are not granted
+                checkPermission(Manifest.permission.READ_CONTACTS, CONTACTS_PERMISSION_CODE);
             }
         });
+    }
+
+    private void checkPermission(String permission, int requestCode) {
+        if (ContextCompat.checkSelfPermission(
+                getActivity(),
+                permission
+        ) == PackageManager.PERMISSION_DENIED) {
+                requestPermissions(new String[] { permission }, requestCode);
+        } else {
+            changeToAddFriendActivity();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == CONTACTS_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(),
+                        "Read Contacts Permission Granted!",
+                        Toast.LENGTH_SHORT)
+                        .show();
+                changeToAddFriendActivity();
+            } else {
+                Toast.makeText(getActivity(),
+                        "Read Contacts Permission Denied!",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+
+    private void changeToAddFriendActivity() {
+        Intent intent = new Intent(getActivity(), AddFriendActivity.class);
+        FriendsWithDebtsWrapper friendsWrapper = new FriendsWithDebtsWrapper(mFriendAdapter.getFriends());
+        intent.putExtra(FRIEND_LIST_EXTRA, friendsWrapper);
+        startActivity(intent);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

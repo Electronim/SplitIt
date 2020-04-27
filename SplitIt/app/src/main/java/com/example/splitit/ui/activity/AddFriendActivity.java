@@ -1,37 +1,32 @@
 package com.example.splitit.ui.activity;
 
-import android.app.Activity;
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.util.StringUtil;
 
 import com.example.splitit.MainActivity;
 import com.example.splitit.R;
 import com.example.splitit.model.Contact;
-import com.example.splitit.model.Debt;
 import com.example.splitit.model.Friend;
-import com.example.splitit.model.FriendWithDebts;
 import com.example.splitit.model.wrappers.FriendsWithDebtsWrapper;
-import com.example.splitit.repository.DebtRepository;
 import com.example.splitit.repository.FriendRepository;
-import com.example.splitit.repository.OnFriendRepositoryActionListener;
 import com.example.splitit.repository.OnRepositoryActionListener;
 import com.example.splitit.ui.adapter.ContactAdapter;
-import com.example.splitit.ui.adapter.FriendAdapter;
 import com.example.splitit.ui.fragment.FriendsFragment;
 
 import java.util.ArrayList;
@@ -85,7 +80,7 @@ public class AddFriendActivity extends AppCompatActivity implements OnRepository
         ArrayList<Contact> contacts = new ArrayList<>();
 
         FriendsWithDebtsWrapper friendsWithDebtsWrapper = (FriendsWithDebtsWrapper) getIntent()
-                .getSerializableExtra(FriendsFragment.FriendListExtra);
+                .getSerializableExtra(FriendsFragment.FRIEND_LIST_EXTRA);
         ArrayList<Friend> currentFriends = friendsWithDebtsWrapper
                 .getFriends()
                 .stream()
@@ -122,14 +117,11 @@ public class AddFriendActivity extends AppCompatActivity implements OnRepository
                     continue;
                 }
 
-                // Log.d(TAG, "getContacts: contact -> " + ": id = " + id + "; name = " + name + "; phone = " + phone);
                 boolean exists = false;
                 for (Friend friend: currentFriends) {
                     exists |= name.equals(friend.name) && phone.equals(friend.phoneNumber);
                     if (exists) break;
                 }
-
-                Log.d(TAG, "getContacts: name = " + name + " " + exists);
 
                 if (!exists) {
                     contacts.add(new Contact(id, name, phone));

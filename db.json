@@ -3,22 +3,22 @@
     "friends":[
       {
         "name":"Dan",
-        "phone_number":"079643241"
+        "phoneNumber":"079643241"
       },
       {
         "name":"Sandu",
-        "phone_number":"0394543812"
+        "phoneNumber":"0394543812"
       }
     ],
     "debts":[
       {
-        "friend_debt_id":1,
-        "group_id":1,
+        "friendId":1,
+        "groupId":1,
         "amount":50
       },
       {
-        "friend_debt_id":2,
-        "group_id":2,
+        "friendId":2,
+        "groupId":2,
         "amount":101.1
       }
     ],

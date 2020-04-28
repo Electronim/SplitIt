@@ -1,10 +1,7 @@
 package com.example.splitit;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,7 +26,6 @@ import com.example.splitit.repository.FriendRepository;
 import com.example.splitit.repository.GroupRepository;
 import com.example.splitit.repository.OnActivityRepositoryActionListener;
 import com.example.splitit.repository.OnFriendRepositoryActionListener;
-import com.example.splitit.utils.BroadcastReceiverUtil;
 import com.example.splitit.utils.RequestQueueHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -98,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements
         syncButton.setOnClickListener(v -> {
             syncDatabaseRequest();
             dialogBuilder.dismiss();
+            //navController.navigate(R.id.navigation_groups);
     });
 
        noSyncButton.setOnClickListener(v -> {
@@ -153,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
+                navController.navigate(R.id.navigation_groups);
             }
         }, new Response.ErrorListener(){
                 @Override

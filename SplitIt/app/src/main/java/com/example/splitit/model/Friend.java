@@ -18,7 +18,7 @@ public class Friend implements Serializable {
     @ColumnInfo(name = "name")
     public String name;
 
-    @ColumnInfo(name = "phone_number")
+    @ColumnInfo(name = "phoneNumber")
     public String phoneNumber;
 
     public Friend(String name, String phoneNumber){
@@ -31,7 +31,7 @@ public class Friend implements Serializable {
 
         try {
             friendJson.put("name", name);
-            friendJson.put("phone_number", phoneNumber);
+            friendJson.put("phoneNumber", phoneNumber);
         } catch (JSONException e) {
             e.printStackTrace();
         }

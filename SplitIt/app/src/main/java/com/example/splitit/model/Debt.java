@@ -16,10 +16,10 @@ public class Debt implements Serializable {
     @ColumnInfo(name = "debt_id")
     public long id;
 
-    @ColumnInfo(name = "friend_debt_id")
+    @ColumnInfo(name = "friendId")
     public long friendId;
 
-    @ColumnInfo(name = "group_id")
+    @ColumnInfo(name = "groupId")
     public long groupId;
 
     @ColumnInfo(name = "amount")
@@ -35,8 +35,8 @@ public class Debt implements Serializable {
         JSONObject debtJson = new JSONObject();
 
         try {
-            debtJson.put("friend_debt_id", friendId);
-            debtJson.put("group_id", groupId);
+            debtJson.put("friendId", friendId);
+            debtJson.put("groupId", groupId);
             debtJson.put("amount", amount);
         } catch (JSONException e) {
             e.printStackTrace();

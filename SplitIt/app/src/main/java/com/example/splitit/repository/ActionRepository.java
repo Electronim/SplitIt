@@ -38,7 +38,7 @@ public class ActionRepository {
         protected void onPostExecute(List<Action> actionList) {
             super.onPostExecute(actionList);
             listener.actionSuccess();
-            listener.notifyActionRecyclerView(actionList);
+            listener.processActionList(actionList);
         }
     }
 
@@ -61,12 +61,12 @@ public class ActionRepository {
         protected void onPostExecute(List<Action> actionList) {
             super.onPostExecute(actionList);
             listener.actionSuccess();
-            listener.notifyActionRecyclerView(actionList);
+            listener.processActionList(actionList);
             listener.getAllActions(actionList);
         }
     }
 
-    public void deleteActions(final Long id, final OnActivityRepositoryActionListener listener){
+    public void deleteAction(final Long id, final OnActivityRepositoryActionListener listener){
         new ActionRepository.DeleteAction(listener).execute(id);
     }
 
@@ -84,12 +84,11 @@ public class ActionRepository {
             return appDatabase.actionDao().getAllActions();
         }
 
-
         @Override
         protected void onPostExecute(List<Action> actionList) {
             super.onPostExecute(actionList);
             listener.actionSuccess();
-            listener.notifyActionRecyclerView(actionList);
+            listener.processActionList(actionList);
         }
     }
 }

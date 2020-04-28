@@ -7,8 +7,10 @@ import androidx.room.PrimaryKey;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 @Entity
-public class Debt {
+public class Debt implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "debt_id")

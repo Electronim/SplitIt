@@ -17,13 +17,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
+import com.example.splitit.model.Action;
 import com.example.splitit.model.Group;
 import com.example.splitit.model.GroupWithFriends;
+import com.example.splitit.repository.ActionRepository;
 import com.example.splitit.repository.GroupRepository;
 import com.example.splitit.repository.GroupWithFriendsRepository;
 import com.example.splitit.repository.OnGroupRepositoryActionListener;
 import com.example.splitit.ui.activity.GroupInfoActivity;
 import com.example.splitit.ui.adapter.GroupAdapter;
+import com.example.splitit.ui.utils.ActivityGeneratorUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -32,7 +35,8 @@ import java.util.List;
 
 public class GroupsFragment extends Fragment implements OnGroupRepositoryActionListener, GroupAdapter.OnGroupListener {
     private static final String TAG = "GroupsFragment";
-    public static final String USER_ID_EXTRA = "user_id";
+    public static final String GROUP_ID_EXTRA = "group_id";
+    public static final String GROUP_NAME_EXTRA = "group_name";
 
     private RecyclerView mGroupRecyclerView;
     private GroupAdapter mGroupAdapter;
@@ -83,6 +87,9 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
             if (!TextUtils.isEmpty(groupName)) {
                 Group newGroup = new Group(groupName);
                 mGroupRepository.insertGroup(newGroup, GroupsFragment.this);
+
+                ActivityGeneratorUtil util = new ActivityGeneratorUtil(getContext());
+                util.generateCreatedGroupAction(newGroup);
             }
 
             mGroupWithFriendsRepository.getAllGroupWithFriends(GroupsFragment.this);
@@ -116,9 +123,10 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
     }
 
     @Override
-    public void onGroupClick(long groupId) {
+    public void onGroupClick(long groupId, String groupName) {
         Intent intent = new Intent(getActivity(), GroupInfoActivity.class);
-        intent.putExtra(USER_ID_EXTRA, groupId);
+        intent.putExtra(GROUP_ID_EXTRA, groupId);
+        intent.putExtra(GROUP_NAME_EXTRA, groupName);
         startActivity(intent);
     }
 }

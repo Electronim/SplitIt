@@ -176,11 +176,17 @@ public class ActivityFragment extends Fragment implements OnActivityRepositoryAc
         thread.start();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void notifyActionRecyclerView(List<Action> actionList) {
-        List<Action> actions = mActionAdapter.getmActions();
+    public void processActionList(List<Action> actionList) {
+        List<Action> actions = mActionAdapter.getActions();
+        List<Action> sortedList = actionList
+                .stream()
+                .sorted((obA, obB) -> (int) obB.timestamp - (int) obA.timestamp)
+                .collect(Collectors.toList());
+
         actions.clear();
-        actions.addAll(actionList);
+        actions.addAll(sortedList);
         mActionAdapter.notifyDataSetChanged();
     }
 

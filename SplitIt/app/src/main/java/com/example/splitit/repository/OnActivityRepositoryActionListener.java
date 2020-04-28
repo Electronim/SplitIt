@@ -6,5 +6,5 @@ import com.example.splitit.model.Action;
 import java.util.List;
 
 public interface OnActivityRepositoryActionListener extends OnRepositoryActionListener {
-    void notifyActionRecyclerView(List<Action> actionList);
+    void processActionList(List<Action> actionList);
 }

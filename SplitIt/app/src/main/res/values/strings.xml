@@ -14,4 +14,8 @@
     <string name="app_open_first_time">openFirstTime</string>
     <string name="label_add_expense">Add a new expense</string>
     <string name="label_type_expense">Insert amount</string>
+    <string name="notif_title_backup_succeed">Backup succeed</string>
+    <string name="notif_title_backup_failed">Backup failed</string>
+    <string name="notif_message_backup_failed">Failed to sync your data</string>
+    <string name="notif_message_backup_succeed">Your data are in sync</string>
 </resources>

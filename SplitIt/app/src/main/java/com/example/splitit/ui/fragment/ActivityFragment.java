@@ -1,5 +1,9 @@
 package com.example.splitit.ui.fragment;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +32,7 @@ import com.example.splitit.repository.FriendRepository;
 import com.example.splitit.repository.GroupRepository;
 import com.example.splitit.repository.OnActivityRepositoryActionListener;
 import com.example.splitit.ui.adapter.ActionAdapter;
+import com.example.splitit.utils.BroadcastReceiverUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +46,7 @@ import java.util.stream.Collectors;
 
 public class ActivityFragment extends Fragment implements OnActivityRepositoryActionListener {
     private static final String TAG = "ActivityFragment";
+    public static final int REQUEST_CODE=101;
 
     private RecyclerView mActionRecyclerView;
     private ActionAdapter mActionAdapter;
@@ -139,7 +146,7 @@ public class ActivityFragment extends Fragment implements OnActivityRepositoryAc
     }
 
     public void sendPostRequest(BackUpWrapper backUpWrapper) {
-        String urlAdress = "https://my-json-server.typicode.com/Electronim/SplitIt/users";
+        String urlAdress = "https://my-json-server.typicode.com/Electronim/SplitIt/backup";
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -153,7 +160,8 @@ public class ActivityFragment extends Fragment implements OnActivityRepositoryAc
                     conn.setDoOutput(true);
                     conn.setDoInput(true);
 
-                    JSONObject jsonParam = backUpWrapper.toJson();
+                    JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("backup", backUpWrapper.toJson());
 
                     Log.i("JSON", jsonParam.toString());
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
@@ -163,8 +171,16 @@ public class ActivityFragment extends Fragment implements OnActivityRepositoryAc
                     os.flush();
                     os.close();
 
+                    Thread.sleep(5000);
                     Log.i("STATUS", String.valueOf(conn.getResponseCode()));
                     Log.i("MSG" , conn.getResponseMessage());
+
+                    if (conn.getResponseCode() == 200 || conn.getResponseCode() == 201)
+                        sendNotification(getResources().getString(R.string.notif_title_backup_succeed),
+                                getResources().getString(R.string.notif_message_backup_succeed));
+                    else
+                        sendNotification(getResources().getString(R.string.notif_title_backup_failed),
+                                getResources().getString(R.string.notif_message_backup_failed));
 
                     conn.disconnect();
                 } catch (Exception e) {
@@ -175,6 +191,17 @@ public class ActivityFragment extends Fragment implements OnActivityRepositoryAc
 
         thread.start();
     }
+
+    private void sendNotification(String notifTitle, String notifMessage){
+        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent notificationIntent = new Intent(getContext(), BroadcastReceiverUtil.class);
+        notificationIntent.putExtra("notificationTitle", notifTitle);
+        notificationIntent.putExtra("notificationMessage", notifMessage);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), REQUEST_CODE, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, 100, pendingIntent);
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override

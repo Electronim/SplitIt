@@ -1,7 +1,10 @@
 package com.example.splitit;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +29,7 @@ import com.example.splitit.repository.FriendRepository;
 import com.example.splitit.repository.GroupRepository;
 import com.example.splitit.repository.OnActivityRepositoryActionListener;
 import com.example.splitit.repository.OnFriendRepositoryActionListener;
+import com.example.splitit.utils.BroadcastReceiverUtil;
 import com.example.splitit.utils.RequestQueueHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -156,8 +160,8 @@ public class MainActivity extends AppCompatActivity implements
                     Toast.makeText(MainActivity.this, "Volley error: " + error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
-        RequestQueueHelper.getRequestQueueHelperInstance(MainActivity.this).addToRequestQueue(jsonObjectRequest);
 
+        RequestQueueHelper.getRequestQueueHelperInstance(MainActivity.this).addToRequestQueue(jsonObjectRequest);
     }
 
     @Override

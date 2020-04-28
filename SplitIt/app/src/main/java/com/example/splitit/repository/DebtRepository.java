@@ -59,6 +59,7 @@ public class DebtRepository {
         protected void onPostExecute(List<Debt> debts) {
             super.onPostExecute(debts);
             listener.actionSuccess();
+            listener.getAllDebts(debts);
         }
     }
 

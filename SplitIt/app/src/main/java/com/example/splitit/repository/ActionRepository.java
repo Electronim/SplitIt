@@ -62,6 +62,7 @@ public class ActionRepository {
             super.onPostExecute(actionList);
             listener.actionSuccess();
             listener.notifyActionRecyclerView(actionList);
+            listener.getAllActions(actionList);
         }
     }
 

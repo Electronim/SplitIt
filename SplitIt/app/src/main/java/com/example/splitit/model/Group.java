@@ -20,10 +20,14 @@ public class Group {
         this.name = name;
     }
 
-    public JSONObject toJson() throws JSONException {
+    public JSONObject toJson() {
         JSONObject groupJson = new JSONObject();
 
-        groupJson.put("name", name);
+        try {
+            groupJson.put("name", name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return groupJson;
     }

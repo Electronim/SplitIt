@@ -59,6 +59,7 @@ public class FriendRepository {
         protected void onPostExecute(List<Friend> friends) {
             super.onPostExecute(friends);
             listener.actionSuccess();
+            listener.getAllFriends(friends);
         }
     }
 

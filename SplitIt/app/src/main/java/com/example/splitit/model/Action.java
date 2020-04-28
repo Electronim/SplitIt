@@ -26,11 +26,15 @@ public class Action {
         this.timestamp = timestamp;
     }
 
-    public JSONObject toJson() throws JSONException {
+    public JSONObject toJson() {
         JSONObject actionJson = new JSONObject();
 
-        actionJson.put("message", message);
-        actionJson.put("timestamp", timestamp);
+        try {
+            actionJson.put("message", message);
+            actionJson.put("timestamp", timestamp);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return actionJson;
     }

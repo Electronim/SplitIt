@@ -33,6 +33,8 @@
         <activity
             android:name=".ui.activity.GroupInfoActivity">
         </activity>
+
+        <receiver android:name=".utils.BroadcastReceiverUtil"  android:exported="false" />
     </application>
 
 </manifest>

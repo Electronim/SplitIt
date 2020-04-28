@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.splitit.MainActivity;
 import com.example.splitit.R;
 import com.example.splitit.model.Debt;
 import com.example.splitit.model.Friend;
@@ -33,6 +38,8 @@ import com.example.splitit.ui.activity.GroupInfoActivity;
 import com.example.splitit.ui.adapter.GroupAdapter;
 import com.example.splitit.utils.ActivityGeneratorUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +62,32 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
     private GroupFriendCrossRefRepository mGroupFriendCrossRefRepository;
 
     List<Debt> allDebts = new ArrayList<>();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.back_up_menu, menu);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.back_up_button) {
+            try {
+                ((MainActivity) getActivity()).backUpData();
+            } catch (JSONException e) {
+                Log.i("REQUEST", "Failed to back up data");
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

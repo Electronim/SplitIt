@@ -1,4 +1,4 @@
-package com.example.splitit.ui.utils;
+package com.example.splitit.utils;
 
 import android.content.Context;
 import android.util.Log;
@@ -48,12 +48,12 @@ public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener
     }
 
      public void generateAddedFriendToGroupAction(String friendName, String groupName) {
-         String message = friendName + " was added to " + groupName + " group";
+         String message = friendName + " was added to `" + groupName + "` group";
          generateAction(message);
      }
 
      public void generateDeletedFriendFromGroupAction(String friendName, String groupName) {
-        String message = friendName + " was removed from " + groupName + " group";
+        String message = friendName + " was removed from `" + groupName + "` group";
         generateAction(message);
      }
 

@@ -1,21 +1,17 @@
 package com.example.splitit.ui.activity;
 
-import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +24,7 @@ import com.example.splitit.repository.FriendRepository;
 import com.example.splitit.repository.OnRepositoryActionListener;
 import com.example.splitit.ui.adapter.ContactAdapter;
 import com.example.splitit.ui.fragment.FriendsFragment;
-import com.example.splitit.ui.utils.ActivityGeneratorUtil;
+import com.example.splitit.utils.ActivityGeneratorUtil;
 
 import java.util.ArrayList;
 import java.util.List;

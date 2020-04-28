@@ -3,23 +3,14 @@ package com.example.splitit;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.splitit.model.Group;
-import com.example.splitit.repository.OnRepositoryActionListener;
-import com.example.splitit.ui.fragment.GroupsFragment;
-import com.example.splitit.ui.utils.ActivityGeneratorUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;

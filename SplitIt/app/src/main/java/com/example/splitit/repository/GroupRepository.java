@@ -75,8 +75,8 @@ public class GroupRepository {
 
         @Override
         protected List<Group> doInBackground(Long... ids) {
-            Friend friend = appDatabase.friendDao().getFriendById(ids[0]);
-            appDatabase.friendDao().deleteFriend(friend);
+            Group group = appDatabase.groupDao().getGroupById(ids[0]);
+            appDatabase.groupDao().deleteGroup(group);
             return appDatabase.groupDao().getAllGroups();
         }
 

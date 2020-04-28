@@ -108,8 +108,6 @@ public class AddFriendsToGroupFragment extends Fragment implements OnRepositoryA
                     .findFirst()
                     .get();
 
-            Log.d(TAG, "onViewCreated: selectat: " + friend.name);
-
             Debt debt = new Debt(friend.id, mGroupId, 0);
             mDebtRepository.insertDebt(debt, this);
 
@@ -121,7 +119,6 @@ public class AddFriendsToGroupFragment extends Fragment implements OnRepositoryA
         }
     }
 
-    // TODO: watch out for this
     private ArrayList <Contact> getFriendsToDisplay(List<Friend> friends) {
         ArrayList <Contact> contacts = new ArrayList<>();
         long id = 1;

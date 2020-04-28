@@ -1,2 +1,42 @@
-{ "users": []
+{
+  "friends":[
+    {
+      "name":"Dan",
+      "phone_number":"079643241"
+    },
+    {
+      "name":"Sandu",
+      "phone_number":"0394543812"
+    }
+  ],
+  "debts":[
+    {
+      "friend_debt_id":1,
+      "group_id":1,
+      "amount":50
+    },
+    {
+      "friend_debt_id":2,
+      "group_id":2,
+      "amount":101.1
+    }
+  ],
+  "groups":[
+    {
+      "name":"Group1"
+    },
+    {
+      "name":"Group2"
+    }
+  ],
+  "actions":[
+    {
+      "message":"action1",
+      "timestamp":1588025616655
+    },
+    {
+      "message":"action2",
+      "timestamp":1588025616655
+    }
+  ]
 }

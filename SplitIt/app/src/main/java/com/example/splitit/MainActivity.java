@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.splitit.model.Group;
 import com.example.splitit.repository.OnRepositoryActionListener;
 import com.example.splitit.ui.fragment.GroupsFragment;
+import com.example.splitit.ui.utils.ActivityGeneratorUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;

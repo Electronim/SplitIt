@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
+import com.example.splitit.model.Group;
 import com.example.splitit.model.GroupWithFriends;
 
 import java.util.ArrayList;
@@ -61,12 +62,12 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
 
         @Override
         public void onClick(View v) {
-            long groupId = mGroups.get(getAdapterPosition()).group.id;
-            onGroupListener.onGroupClick(groupId);
+            Group group = mGroups.get(getAdapterPosition()).group;
+            onGroupListener.onGroupClick(group.id, group.name);
         }
     }
 
     public interface OnGroupListener {
-        void onGroupClick(long groupId);
+        void onGroupClick(long groupId, String groupName);
     }
 }

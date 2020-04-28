@@ -20,7 +20,7 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ActionView
         this.mActions = mActions;
     }
 
-    public ArrayList<Action> getmActions() {
+    public ArrayList<Action> getActions() {
         return mActions;
     }
 

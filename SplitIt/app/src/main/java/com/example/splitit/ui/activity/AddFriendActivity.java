@@ -28,6 +28,7 @@ import com.example.splitit.repository.FriendRepository;
 import com.example.splitit.repository.OnRepositoryActionListener;
 import com.example.splitit.ui.adapter.ContactAdapter;
 import com.example.splitit.ui.fragment.FriendsFragment;
+import com.example.splitit.ui.utils.ActivityGeneratorUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,9 @@ public class AddFriendActivity extends AppCompatActivity implements OnRepository
             for(Contact contact: selectedContacts) {
                 Friend friend = new Friend(contact.name, contact.phoneNumber);
                 mFriendRepository.insertFriend(friend, AddFriendActivity.this);
+
+                ActivityGeneratorUtil util = new ActivityGeneratorUtil(this);
+                util.generateContactAddedAsFriendAction(contact);
             }
 
             Intent intent = new Intent(this, MainActivity.class);

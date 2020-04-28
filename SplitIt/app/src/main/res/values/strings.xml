@@ -12,4 +12,6 @@
     <string name="label_no_sync">No</string>
     <string name="label_sync">Yes</string>
     <string name="app_open_first_time">openFirstTime</string>
+    <string name="label_add_expense">Add a new expense</string>
+    <string name="label_type_expense">Insert amount</string>
 </resources>

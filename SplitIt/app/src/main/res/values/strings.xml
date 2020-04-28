@@ -8,4 +8,8 @@
     <string name="label_type_group_name">Type the group name</string>
     <string name="label_submit">Submit</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_request_backup">Do you want to sync your data ?</string>
+    <string name="label_no_sync">No</string>
+    <string name="label_sync">Yes</string>
+    <string name="app_open_first_time">openFirstTime</string>
 </resources>

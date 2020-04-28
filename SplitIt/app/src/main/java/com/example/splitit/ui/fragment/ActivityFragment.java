@@ -134,11 +134,11 @@ public class ActivityFragment extends Fragment implements OnActivityRepositoryAc
         List<JSONObject> jsonActions = actions.stream().map(Action::toJson).collect(Collectors.toList());
         BackUpWrapper backUpWrapper = new BackUpWrapper(jsonFriends, jsonDebts, jsonGroups, jsonActions);
 
-        sendPost(backUpWrapper);
+        sendPostRequest(backUpWrapper);
 
     }
 
-    public void sendPost(BackUpWrapper backUpWrapper) {
+    public void sendPostRequest(BackUpWrapper backUpWrapper) {
         String urlAdress = "https://my-json-server.typicode.com/Electronim/SplitIt/users";
 
         Thread thread = new Thread(new Runnable() {

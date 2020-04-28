@@ -17,16 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
-import com.example.splitit.model.Action;
 import com.example.splitit.model.Group;
 import com.example.splitit.model.GroupWithFriends;
-import com.example.splitit.repository.ActionRepository;
 import com.example.splitit.repository.GroupRepository;
 import com.example.splitit.repository.GroupWithFriendsRepository;
 import com.example.splitit.repository.OnGroupRepositoryActionListener;
 import com.example.splitit.ui.activity.GroupInfoActivity;
 import com.example.splitit.ui.adapter.GroupAdapter;
-import com.example.splitit.ui.utils.ActivityGeneratorUtil;
+import com.example.splitit.utils.ActivityGeneratorUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -68,6 +66,13 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
         mAddGroupFloatingButton.setOnClickListener(v -> {
             showAddGroupDialog();
         });
+
+        mGroupWithFriendsRepository.getAllGroupWithFriends(GroupsFragment.this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         mGroupWithFriendsRepository.getAllGroupWithFriends(GroupsFragment.this);
     }

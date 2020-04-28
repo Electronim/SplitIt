@@ -5,14 +5,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.annotation.ArrayRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -22,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
 import com.example.splitit.model.Debt;
-import com.example.splitit.model.Friend;
 import com.example.splitit.model.FriendWithDebts;
 import com.example.splitit.model.GroupFriendCrossRef;
 import com.example.splitit.repository.DebtRepository;
@@ -31,8 +28,9 @@ import com.example.splitit.repository.GroupFriendCrossRefRepository;
 import com.example.splitit.repository.GroupRepository;
 import com.example.splitit.repository.GroupWithFriendsRepository;
 import com.example.splitit.repository.OnFriendRepositoryActionListener;
+import com.example.splitit.ui.activity.GroupInfoActivity;
 import com.example.splitit.ui.adapter.GroupFriendAdapter;
-import com.example.splitit.ui.utils.ActivityGeneratorUtil;
+import com.example.splitit.utils.ActivityGeneratorUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -67,6 +65,7 @@ public class GroupInfoFragment extends Fragment implements
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         Intent intent = getActivity().getIntent();
         mGroupId = intent.getLongExtra(GroupsFragment.GROUP_ID_EXTRA, -1);
@@ -82,21 +81,6 @@ public class GroupInfoFragment extends Fragment implements
         mGroupFriendsRecyclerView.setHasFixedSize(true);
         mGroupFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-//        // TODO: comment these!
-        GroupFriendCrossRef groupFriend1 = new GroupFriendCrossRef(mGroupId, 1);
-        GroupFriendCrossRef groupFriend2 = new GroupFriendCrossRef(mGroupId, 2);
-        GroupFriendCrossRef groupFriend3 = new GroupFriendCrossRef(mGroupId + 1, 3);
-        GroupFriendCrossRef groupFriend4 = new GroupFriendCrossRef(mGroupId + 1, 4);
-        mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend1, this);
-        mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend2, this);
-        mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend3, this);
-        mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend4, this);
-
-        mDebtRepository.insertDebt(new Debt(1, mGroupId, 0), this);
-        mDebtRepository.insertDebt(new Debt(2, mGroupId, 0), this);
-        mDebtRepository.insertDebt(new Debt(3, mGroupId + 1, 0), this);
-        mDebtRepository.insertDebt(new Debt(4, mGroupId + 1, 0), this);
-
         mGroupFriendAdapter = new GroupFriendAdapter(new ArrayList<>(), mGroupId, this);
         mGroupFriendsRecyclerView.setAdapter(mGroupFriendAdapter);
 
@@ -107,7 +91,8 @@ public class GroupInfoFragment extends Fragment implements
 
         mAddFriendToGroupButton = view.findViewById(R.id.button_add_friend_to_group);
         mAddFriendToGroupButton.setOnClickListener(v -> {
-//            startAddFriendToGroupFragment();
+            ArrayList<FriendWithDebts> friendWithDebts = mGroupFriendAdapter.getFriends();
+            ((GroupInfoActivity) getActivity()).transactAddFriendToGroupFragment(friendWithDebts);
         });
 
         mFriendWithDebtsRepository.getAllFriendsWithDebts(this);

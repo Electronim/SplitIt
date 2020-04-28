@@ -11,7 +11,7 @@ public class FriendWithDebts implements Serializable {
     public Friend friend;
     @Relation(
             parentColumn = "friend_id",
-            entityColumn = "friend_debt_id"
+            entityColumn = "friendId"
     )
     public List<Debt> debts;
 }

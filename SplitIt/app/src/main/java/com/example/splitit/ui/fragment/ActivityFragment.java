@@ -8,6 +8,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
+import com.example.splitit.controller.ApplicationController;
 import com.example.splitit.model.Action;
 import com.example.splitit.model.Debt;
 import com.example.splitit.model.Friend;
@@ -50,18 +54,42 @@ public class ActivityFragment extends Fragment implements OnActivityRepositoryAc
 
     private RecyclerView mActionRecyclerView;
     private ActionAdapter mActionAdapter;
+
     private ActionRepository mActionRepository;
     private FriendRepository mFriendRepository;
     private GroupRepository mGroupRepository;
     private DebtRepository mDebtRepository;
-
-    private Button backUpButton;
 
     private List<Friend> friends = new ArrayList<>();
     private List<Group> groups = new ArrayList<>();
     private List<Action> actions = new ArrayList<>();
     private List<Debt> debts = new ArrayList<>();
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.back_up_menu, menu);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.back_up_button) {
+            try {
+                backUpData();
+            } catch (JSONException e) {
+                Log.i("REQUEST", "Failed to back up data");
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -83,19 +111,6 @@ public class ActivityFragment extends Fragment implements OnActivityRepositoryAc
 
         mActionAdapter = new ActionAdapter(new ArrayList<Action>());
         mActionRecyclerView.setAdapter(mActionAdapter);
-
-        backUpButton = view.findViewById(R.id.backUp_button);
-        backUpButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v) {
-                try {
-                    backUpData();
-                } catch (JSONException e) {
-                    Log.i("REQUEST", "Failed to buckUp data");
-                }
-            }
-        });
 
         mActionRepository.getAllActions(ActivityFragment.this);
         mFriendRepository.getAllFriends(ActivityFragment.this);
@@ -175,12 +190,13 @@ public class ActivityFragment extends Fragment implements OnActivityRepositoryAc
                     Log.i("STATUS", String.valueOf(conn.getResponseCode()));
                     Log.i("MSG" , conn.getResponseMessage());
 
+                    Context context = ApplicationController.getAppContext();
                     if (conn.getResponseCode() == 200 || conn.getResponseCode() == 201)
-                        sendNotification(getResources().getString(R.string.notif_title_backup_succeed),
-                                getResources().getString(R.string.notif_message_backup_succeed));
+                        sendNotification(context.getResources().getString(R.string.notif_title_backup_succeed),
+                                context.getResources().getString(R.string.notif_message_backup_succeed));
                     else
-                        sendNotification(getResources().getString(R.string.notif_title_backup_failed),
-                                getResources().getString(R.string.notif_message_backup_failed));
+                        sendNotification(context.getResources().getString(R.string.notif_title_backup_failed),
+                                context.getResources().getString(R.string.notif_message_backup_failed));
 
                     conn.disconnect();
                 } catch (Exception e) {
@@ -193,11 +209,12 @@ public class ActivityFragment extends Fragment implements OnActivityRepositoryAc
     }
 
     private void sendNotification(String notifTitle, String notifMessage){
-        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-        Intent notificationIntent = new Intent(getContext(), BroadcastReceiverUtil.class);
+        Context context = ApplicationController.getAppContext();
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent notificationIntent = new Intent(context, BroadcastReceiverUtil.class);
         notificationIntent.putExtra("notificationTitle", notifTitle);
         notificationIntent.putExtra("notificationMessage", notifMessage);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), REQUEST_CODE, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, REQUEST_CODE, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, 100, pendingIntent);
     }

@@ -77,13 +77,13 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
 
         private void changeColor(final Contact contact) {
             if (contact.isSelected) {
-                int colorCode = mContext.getResources().getColor(R.color.colorPrimary);
+                int colorCode = mContext.getResources().getColor(R.color.primaryColor);
 
                 this.contactCardView.setCardBackgroundColor(colorCode);
                 this.nameTextView.setTextColor(Color.WHITE);
                 this.phoneNumberTextView.setTextColor(Color.WHITE);
             } else {
-                int colorCode = mContext.getResources().getColor(R.color.defaultTextColor);
+                int colorCode = mContext.getResources().getColor(R.color.secondaryTextColor);
 
                 this.contactCardView.setCardBackgroundColor(Color.WHITE);
                 this.nameTextView.setTextColor(colorCode);

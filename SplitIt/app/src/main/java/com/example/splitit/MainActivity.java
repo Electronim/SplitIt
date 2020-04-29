@@ -78,6 +78,12 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
                 R.id.navigation_friends, R.id.navigation_groups, R.id.navigation_activity)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+
+        Intent intent = getIntent();
+        boolean navigateToFriends = intent.getBooleanExtra("friendsTab", false);
+        if (navigateToFriends)
+            navController.navigate(R.id.navigation_friends);
+
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
@@ -125,13 +131,11 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
             @Override
             public void onResponse(JSONObject response) {
                 Gson gson = new Gson();
-                List<Friend> friends = new ArrayList<>();
                 List<Debt> debts = new ArrayList<>();
                 try {
                     JSONArray friendList = response.getJSONArray("friends");
                     for (int index = 0; index < friendList.length(); index++) {
                         Friend friend = gson.fromJson(friendList.getJSONObject(index).toString(), Friend.class);
-                        friends.add(friend);
                         mFriendRepository.insertFriend(friend, MainActivity.this);
                         Log.d("GetRequest", friend.name + " " + friend.phoneNumber);
                     }
@@ -158,14 +162,9 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
                         Log.d("GetRequest", action.message + " " + action.timestamp);
                     }
 
-                    for (Friend friend : friends){
-                        for (Debt debt : debts){
-                            if (debt.friendId == friend.id){
-                                GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(debt.groupId, debt.friendId);
-                                mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend, MainActivity.this);
-                                debts.remove(debt);
-                            }
-                        }
+                    for (Debt debt : debts){
+                        GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(debt.groupId, debt.friendId);
+                        mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend, MainActivity.this);
                     }
                     Log.i("Sync", "The data are in sync now");
 

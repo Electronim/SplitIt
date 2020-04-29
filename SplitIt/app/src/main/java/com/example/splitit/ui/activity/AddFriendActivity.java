@@ -71,6 +71,7 @@ public class AddFriendActivity extends AppCompatActivity implements OnRepository
             }
 
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("friendsTab", true);
             startActivity(intent);
         });
     }

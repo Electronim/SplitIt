@@ -43,7 +43,10 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
         GroupWithFriends groupWithFriends = mGroups.get(position);
         holder.groupName.setText(groupWithFriends.group.name);
-        holder.nrGroupParticipants.setText(String.valueOf(groupWithFriends.friends.size()));
+
+        int size = groupWithFriends.friends.size();
+        String nrMessage = size == 0 ? "empty" : "You + " + size + " friend" + (size == 1 ? "" : "s");
+        holder.nrGroupParticipants.setText(nrMessage);
     }
 
     @Override

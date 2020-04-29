@@ -40,7 +40,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         FriendWithDebts friendWithDebts = mFriends.get(position);
         holder.friendName.setText(friendWithDebts.friend.name);
         Double amount = friendWithDebts.debts.stream().mapToDouble(p -> p.amount).sum();
-        holder.friendAmount.setText(amount == 0 ? "settled up" : " owes you RON" + amount.toString());
+        holder.friendAmount.setText(amount == 0 ? "settled up" : " owes you RON" + String.format("%.2f", amount));
     }
 
     @Override

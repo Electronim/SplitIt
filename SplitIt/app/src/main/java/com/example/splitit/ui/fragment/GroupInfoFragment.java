@@ -46,7 +46,6 @@ public class GroupInfoFragment extends Fragment implements
     private RecyclerView mGroupFriendsRecyclerView;
     private GroupFriendAdapter mGroupFriendAdapter;
 
-    private TextView mGroupNameTextView;
     private Button mAddFriendToGroupButton;
     private FloatingActionButton mAddExpenseFloatingButton;
     private long mGroupId;
@@ -65,7 +64,7 @@ public class GroupInfoFragment extends Fragment implements
         mGroupId = intent.getLongExtra(GroupsFragment.GROUP_ID_EXTRA, -1);
         mGroupName = intent.getStringExtra(GroupsFragment.GROUP_NAME_EXTRA);
 
-        getActivity().setTitle(mGroupName + " group");
+        getActivity().setTitle(mGroupName);
         return inflater.inflate(R.layout.fragment_group_info, container, false);
     }
 
@@ -86,9 +85,6 @@ public class GroupInfoFragment extends Fragment implements
 
         mGroupFriendAdapter = new GroupFriendAdapter(new ArrayList<>(), mGroupId, this);
         mGroupFriendsRecyclerView.setAdapter(mGroupFriendAdapter);
-
-        mGroupNameTextView = view.findViewById(R.id.textView_group_name);
-        mGroupNameTextView.setText(mGroupName);
 
         mAddExpenseFloatingButton = view.findViewById(R.id.fab_expenses);
         mAddExpenseFloatingButton.setOnClickListener(v -> {
@@ -126,7 +122,7 @@ public class GroupInfoFragment extends Fragment implements
 
             ArrayList<FriendWithDebts> friendWithDebts = getGroupFriends(mGroupFriendAdapter.getFriends());
             for(FriendWithDebts friend: friendWithDebts) {
-                double amountPerFriend = amount / friendWithDebts.size();
+                double amountPerFriend = amount / (friendWithDebts.size() + 1);
 
                 Debt newDebt = new Debt(friend.friend.id, mGroupId, amountPerFriend);
                 mDebtRepository.insertDebt(newDebt, this);

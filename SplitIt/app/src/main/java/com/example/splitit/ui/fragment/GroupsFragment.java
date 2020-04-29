@@ -240,6 +240,7 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
 
         String groupName = "";
         ArrayList<Debt> debts = new ArrayList<>();
+        ArrayList<Debt> debtsUndo = new ArrayList<>();
         for (GroupWithFriends group: groupWithFriends) {
             if (group.group.groupId != groupId) continue;
             groupName = group.group.name;
@@ -254,6 +255,7 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
                         .filter(d -> d.groupId == groupId && d.friendDebtId == friend.friendId)
                         .collect(Collectors.toCollection(ArrayList::new));
 
+                debtsUndo.addAll(debts);
                 debts.forEach(d -> mDebtRepository.deleteDebt(d.debtId, this));
 
                 // delete group ~ friend relation
@@ -270,8 +272,7 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
             util.generateDeletedGroupAction(new Group(groupName));
             Group group = new Group(groupName);
             group.setGroupId(groupId);
-            util.createSnackBar(view, "The group '" + groupName + "' has been deleted", debts, group);
-
+            util.createSnackBar(view, "The group '" + groupName + "' has been deleted", debtsUndo, group);
         }
 
         mGroupRepository.getAllGroups(this);

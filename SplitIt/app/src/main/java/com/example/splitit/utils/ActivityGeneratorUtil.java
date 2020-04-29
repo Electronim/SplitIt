@@ -19,6 +19,7 @@ import com.example.splitit.model.Contact;
 import com.example.splitit.model.Debt;
 import com.example.splitit.model.Group;
 import com.example.splitit.model.GroupFriendCrossRef;
+import com.example.splitit.model.wrappers.GroupFriendCrossRefWrapper;
 import com.example.splitit.repository.ActionRepository;
 import com.example.splitit.repository.DebtRepository;
 import com.example.splitit.repository.GroupFriendCrossRefRepository;
@@ -30,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener {
     private static final String TAG = "ActivityGeneratorUtil";
@@ -70,6 +72,12 @@ public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener
         generateAction(message);
     }
 
+    public void generateRestoredGroupAction(Group group) {
+        String groupName = group.name;
+        String message = "The group `" + groupName + "` was been restored";
+        generateAction(message);
+    }
+
     public void generateContactAddedAsFriendAction(Contact contact) {
         String message = "The contact " + contact.name + " (" + contact.phoneNumber + ") was added as friend";
         generateAction(message);
@@ -107,6 +115,7 @@ public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener
             @Override
             public void onClick(View v) {
                 undoDeleteOperation(group, debtList);
+                generateRestoredGroupAction(group);
             }
         });
 
@@ -117,8 +126,16 @@ public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener
     public void undoDeleteOperation(Group group, List<Debt> debts) {
         mGroupRepository.insertGroup(group, this);
         debts.forEach(p -> mDebtRepository.insertDebt(p, this));
-        debts.forEach(p -> { GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(p.groupId, p.friendDebtId);
-        mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend, this);});
+
+        ArrayList<GroupFriendCrossRefWrapper> filteredList = debts.stream()
+                .map(d -> new GroupFriendCrossRefWrapper(d.groupId, d.friendDebtId))
+                .distinct()
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        filteredList.forEach(p -> {
+            GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(p.getGroupId(), p.getFriendId());
+            mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend, this);
+        });
 
         navController = Navigation.findNavController(activity, R.id.nav_host_fragment);
         navController.navigate(R.id.navigation_groups);

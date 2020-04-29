@@ -64,6 +64,10 @@ public class ActionAdapter extends RecyclerView.Adapter<ActionAdapter.ActionView
             return R.drawable.ic_person_add_black_24dp;
         }
 
+        if (actionMessage.contains("restored")) {
+            return R.drawable.ic_history_black_24dp;
+        }
+
         if (actionMessage.contains("removed") || actionMessage.contains("deleted")) {
             return R.drawable.ic_delete_black_24dp;
         }

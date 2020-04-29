@@ -22,7 +22,8 @@
             android:src="@drawable/ic_person_outline_black_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/secondaryColor"/>
 
         <TextView
             android:id="@+id/textView_friend_group_name"

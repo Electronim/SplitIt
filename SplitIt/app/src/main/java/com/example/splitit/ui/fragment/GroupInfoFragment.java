@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
 
 public class GroupInfoFragment extends Fragment implements
         OnFriendRepositoryActionListener,
+        GroupFriendAdapter.OnSettleUpClickListener,
         GroupFriendAdapter.OnGroupFriendLongClickListener {
     private static final String TAG = "GroupInfoActivity";
 
@@ -83,7 +84,7 @@ public class GroupInfoFragment extends Fragment implements
         mGroupFriendsRecyclerView.setHasFixedSize(true);
         mGroupFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mGroupFriendAdapter = new GroupFriendAdapter(new ArrayList<>(), mGroupId, this);
+        mGroupFriendAdapter = new GroupFriendAdapter(new ArrayList<>(), mGroupId, this, this);
         mGroupFriendsRecyclerView.setAdapter(mGroupFriendAdapter);
 
         mAddExpenseFloatingButton = view.findViewById(R.id.fab_expenses);
@@ -128,7 +129,7 @@ public class GroupInfoFragment extends Fragment implements
                 mDebtRepository.insertDebt(newDebt, this);
 
                 ActivityGeneratorUtil util = new ActivityGeneratorUtil(getContext());
-                util.generateAddedExpense(friend.friend.name, mGroupName, amountPerFriend);
+                util.generateAddedExpenseAction(friend.friend.name, mGroupName, amountPerFriend);
             }
 
             mFriendWithDebtsRepository.getAllFriendsWithDebts(this);
@@ -141,6 +142,30 @@ public class GroupInfoFragment extends Fragment implements
 
         dialogBuilder.setView(dialogView);
         dialogBuilder.show();
+    }
+
+    @Override
+    public void onClick(long friendId, long groupId) {
+        List<FriendWithDebts> friendWithDebtsList = mGroupFriendAdapter.getFriends();
+        String friendName = "";
+        double totalAmount = 0;
+        for(FriendWithDebts friend: friendWithDebtsList) {
+            if (friend.friend.id != friendId) continue;
+
+            for (Debt debt: friend.debts) {
+                if (debt.groupId != groupId) continue;
+                friendName = friend.friend.name;
+                totalAmount += debt.amount;
+                mDebtRepository.deleteDebt(debt.id, this);
+            }
+        }
+
+        Debt debt = new Debt(friendId, groupId, 0);
+        mDebtRepository.insertDebt(debt, this);
+
+        ActivityGeneratorUtil util = new ActivityGeneratorUtil(getContext());
+        util.generateSettledUpAction(friendName, mGroupName, totalAmount);
+        mFriendWithDebtsRepository.getAllFriendsWithDebts(this);
     }
 
     @Override

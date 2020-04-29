@@ -21,6 +21,7 @@ import com.example.splitit.model.Friend;
 import com.example.splitit.model.Group;
 import com.example.splitit.model.GroupFriendCrossRef;
 import com.example.splitit.model.wrappers.BackUpWrapper;
+import com.example.splitit.model.wrappers.GroupFriendCrossRefWrapper;
 import com.example.splitit.repository.ActionRepository;
 import com.example.splitit.repository.DebtRepository;
 import com.example.splitit.repository.FriendRepository;
@@ -49,6 +50,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity implements OnActivityRepositoryActionListener {
     public static final int REQUEST_CODE=101;
@@ -154,10 +156,21 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
                         Log.d("GetRequest", action.message + " " + action.timestamp);
                     }
 
-                    for (Debt debt : debts){
-                        GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(debt.groupId, debt.friendDebtId);
+                    ArrayList<GroupFriendCrossRefWrapper> list = debts.stream()
+                            .map(d -> new GroupFriendCrossRefWrapper(d.groupId, d.friendDebtId))
+                            .distinct()
+                            .collect(Collectors.toCollection(ArrayList::new));
+
+                    for (GroupFriendCrossRefWrapper el: list) {
+                        Log.d("GetRequest", "onResponse: " + el.getFriendId() + " " + el.getGroupId());
+                        GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(el.getGroupId(), el.getFriendId());
                         mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend, MainActivity.this);
                     }
+
+//                    for (Debt debt : debts){
+//                        GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(debt.groupId, debt.friendDebtId);
+//                        mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend, MainActivity.this);
+//                    }
                     Log.i("Sync", "The data are in sync now");
 
                 } catch (JSONException ex) {

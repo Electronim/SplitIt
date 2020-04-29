@@ -15,8 +15,8 @@
         android:fontFamily="@font/work_sans_semibold"
         android:gravity="center"
         android:text="Friends"
-        android:textAppearance="?attr/textAppearanceHeadline5"
-        android:textSize="28dp"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

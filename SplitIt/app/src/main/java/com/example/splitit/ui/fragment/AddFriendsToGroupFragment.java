@@ -115,7 +115,7 @@ public class AddFriendsToGroupFragment extends Fragment implements OnRepositoryA
             GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(mGroupId, friend.id);
             mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend, this);
 
-            Toast.makeText(getActivity(), "The selected friends were added!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "The selected friends were added!", Toast.LENGTH_SHORT).show();
             util.generateAddedFriendToGroupAction(friend.name, mGroupName);
         }
     }

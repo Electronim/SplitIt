@@ -81,7 +81,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         @Override
         public boolean onLongClick(View v) {
             long groupId = mGroups.get(getAdapterPosition()).group.id;
-            onLongClickGroupListener.onGroupLongClick(groupId);
+            onLongClickGroupListener.onGroupLongClick(groupId, v);
             return true;
         }
     }
@@ -91,6 +91,6 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
     }
 
     public interface OnLongClickGroupListener {
-        void onGroupLongClick(long groupId);
+        void onGroupLongClick(long groupId, View v);
     }
 }

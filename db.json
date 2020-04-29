@@ -2,44 +2,51 @@
   "backup":{
     "friends":[
       {
+        "friendId":1,
         "name":"Dan",
         "phoneNumber":"079643241"
       },
       {
+        "friendId":2,
         "name":"Sandu",
         "phoneNumber":"0394543812"
       }
     ],
     "debts":[
       {
-        "friendId":1,
+        "debtId":1,
+        "friendDebtId":1,
         "groupId":1,
         "amount":50
       },
       {
-        "friendId":2,
+        "debtId":2
+        "friendDebtId":2,
         "groupId":2,
         "amount":101.1
       }
     ],
     "groups":[
       {
+        "groupId":1
         "name":"Group1"
       },
       {
+        "groupId":2
         "name":"Group2"
       }
     ],
     "actions":[
       {
+        "actionId":1,
         "message":"action1",
         "timestamp":1588025616655
       },
       {
+        "actionId":2,
         "message":"action2",
         "timestamp":1588025616655
       }
-    ],
-    "groupFriendCrossRefs":[]
+    ]
   }
 }

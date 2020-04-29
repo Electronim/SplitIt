@@ -144,7 +144,7 @@ public class GroupInfoFragment extends Fragment implements
     }
 
     @Override
-    public void onClick(long friendId, long groupId) {
+    public void onClick(long friendId, long groupId, View v) {
         List<FriendWithDebts> friendWithDebtsList = mGroupFriendAdapter.getFriends();
         String friendName = "";
         double totalAmount = 0;
@@ -165,6 +165,7 @@ public class GroupInfoFragment extends Fragment implements
         ActivityGeneratorUtil util = new ActivityGeneratorUtil(getContext());
         util.generateSettledUpAction(friendName, mGroupName, totalAmount);
         mFriendWithDebtsRepository.getAllFriendsWithDebts(this);
+        util.createSnackBar(v, "You settled up with " + friendName);
     }
 
     @Override
@@ -187,7 +188,6 @@ public class GroupInfoFragment extends Fragment implements
         if (!TextUtils.isEmpty(friendName)) {
             ActivityGeneratorUtil util = new ActivityGeneratorUtil(getContext());
             util.generateDeletedFriendFromGroupAction(friendName, mGroupName);
-            util.createSnackBar(view, friendName + " has been deleted from the group");
         }
     }
 

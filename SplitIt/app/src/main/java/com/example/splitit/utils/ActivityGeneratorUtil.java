@@ -43,7 +43,7 @@ public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener
     }
 
     public void generateContactAddedAsFriendAction(Contact contact) {
-        String message = "The contact " + contact.name + "(" + contact.phoneNumber + ") was added as friend";
+        String message = "The contact " + contact.name + " (" + contact.phoneNumber + ") was added as friend";
         generateAction(message);
     }
 

@@ -37,6 +37,7 @@ import com.example.splitit.repository.OnRepositoryActionListener;
 import com.example.splitit.utils.BroadcastReceiverUtil;
 import com.example.splitit.utils.RequestQueueHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 
 import androidx.annotation.RequiresApi;
@@ -99,25 +100,16 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
     }
 
     private void showSyncRequestDialog() {
-        final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_request_backup, null);
-
-        Button syncButton = dialogView.findViewById(R.id.button_sync);
-        Button noSyncButton = dialogView.findViewById(R.id.button_no_sync);
-
-        syncButton.setOnClickListener(v -> {
-            syncDatabaseRequest();
-            dialogBuilder.dismiss();
-            //navController.navigate(R.id.navigation_groups);
-    });
-
-       noSyncButton.setOnClickListener(v -> {
-            dialogBuilder.dismiss();
-        });
-
-        dialogBuilder.setView(dialogView);
-        dialogBuilder.show();
+        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(this);
+        dialogBuilder
+                .setTitle("Sync info")
+                .setMessage("Would you like to import data?")
+                .setNegativeButton("Decline", (dialog, which) -> {
+                })
+                .setPositiveButton("Accept", (dialog, which) -> {
+                    syncDatabaseRequest();
+                })
+                .show();
 
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();

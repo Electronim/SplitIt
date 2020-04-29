@@ -12,6 +12,7 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +50,7 @@ public class AddFriendActivity extends AppCompatActivity implements OnRepository
         mFriendRepository = new FriendRepository(this);
         mContactRecyclerView = findViewById(R.id.contacts_recycler_view);
         mContactRecyclerView.setHasFixedSize(true);
-        mContactRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mContactRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         ArrayList<Contact> contactList = getContacts();
         List<Contact> sortedContacts = contactList.stream().sorted((obA, obB) ->

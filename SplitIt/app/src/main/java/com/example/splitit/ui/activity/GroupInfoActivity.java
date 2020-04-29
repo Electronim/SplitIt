@@ -3,10 +3,12 @@ package com.example.splitit.ui.activity;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.splitit.R;
+import com.example.splitit.model.Action;
 import com.example.splitit.model.FriendWithDebts;
 import com.example.splitit.model.wrappers.FriendsWithDebtsWrapper;
 import com.example.splitit.ui.fragment.AddFriendsToGroupFragment;

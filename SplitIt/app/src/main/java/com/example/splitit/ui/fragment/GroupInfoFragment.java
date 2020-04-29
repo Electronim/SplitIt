@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,6 +46,7 @@ public class GroupInfoFragment extends Fragment implements
     private RecyclerView mGroupFriendsRecyclerView;
     private GroupFriendAdapter mGroupFriendAdapter;
 
+    private TextView mGroupNameTextView;
     private Button mAddFriendToGroupButton;
     private FloatingActionButton mAddExpenseFloatingButton;
     private long mGroupId;
@@ -59,6 +61,11 @@ public class GroupInfoFragment extends Fragment implements
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Intent intent = getActivity().getIntent();
+        mGroupId = intent.getLongExtra(GroupsFragment.GROUP_ID_EXTRA, -1);
+        mGroupName = intent.getStringExtra(GroupsFragment.GROUP_NAME_EXTRA);
+
+        getActivity().setTitle(mGroupName + " group");
         return inflater.inflate(R.layout.fragment_group_info, container, false);
     }
 
@@ -66,10 +73,6 @@ public class GroupInfoFragment extends Fragment implements
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Intent intent = getActivity().getIntent();
-        mGroupId = intent.getLongExtra(GroupsFragment.GROUP_ID_EXTRA, -1);
-        mGroupName = intent.getStringExtra(GroupsFragment.GROUP_NAME_EXTRA);
 
         mGroupRepository = new GroupRepository(getActivity());
         mDebtRepository = new DebtRepository(getActivity());
@@ -83,6 +86,9 @@ public class GroupInfoFragment extends Fragment implements
 
         mGroupFriendAdapter = new GroupFriendAdapter(new ArrayList<>(), mGroupId, this);
         mGroupFriendsRecyclerView.setAdapter(mGroupFriendAdapter);
+
+        mGroupNameTextView = view.findViewById(R.id.textView_group_name);
+        mGroupNameTextView.setText(mGroupName);
 
         mAddExpenseFloatingButton = view.findViewById(R.id.fab_expenses);
         mAddExpenseFloatingButton.setOnClickListener(v -> {

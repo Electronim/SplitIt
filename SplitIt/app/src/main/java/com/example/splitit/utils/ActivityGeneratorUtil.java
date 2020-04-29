@@ -21,6 +21,7 @@ import com.example.splitit.repository.OnActivityRepositoryActionListener;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener {
@@ -71,8 +72,13 @@ public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener
         generateAction(message);
      }
 
-    public void generateAddedExpense(String friendName, String groupName, double amount) {
-        String message = friendName + " owes you " + String.format("%.2f", amount) + "RON in `" + groupName + "` group!";
+    public void generateAddedExpenseAction(String friendName, String groupName, double amount) {
+        String message = friendName + " owes you RON" + String.format("%.2f", amount) + " in `" + groupName + "` group!";
+        generateAction(message);
+    }
+
+    public void generateSettledUpAction(String friendName, String groupName, double amount) {
+        String message = "You settled up with " + friendName + " in `" + groupName + "` group (RON" + String.format("%.2f", amount) + ")";
         generateAction(message);
     }
 
@@ -113,9 +119,9 @@ public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener
 
     @Override
     public void processActionList(List<Action> actionList) {
-        for(Action action : actionList) {
-            Log.d(TAG, "processActionList: log: " + action.message);
-        }
+//        for(Action action : actionList) {
+//            Log.d(TAG, "processActionList: log: " + action.message);
+//        }
     }
 
     @Override

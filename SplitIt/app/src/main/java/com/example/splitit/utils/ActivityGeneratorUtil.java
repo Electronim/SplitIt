@@ -1,5 +1,6 @@
 package com.example.splitit.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -8,16 +9,22 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import com.example.splitit.MainActivity;
 import com.example.splitit.R;
 import com.example.splitit.model.Action;
 import com.example.splitit.model.Contact;
 import com.example.splitit.model.Debt;
 import com.example.splitit.model.Group;
+import com.example.splitit.model.GroupFriendCrossRef;
 import com.example.splitit.repository.ActionRepository;
 import com.example.splitit.repository.DebtRepository;
+import com.example.splitit.repository.GroupFriendCrossRefRepository;
 import com.example.splitit.repository.GroupRepository;
 import com.example.splitit.repository.OnActivityRepositoryActionListener;
+import com.example.splitit.ui.adapter.GroupAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.DecimalFormat;
@@ -28,15 +35,21 @@ public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener
     private static final String TAG = "ActivityGeneratorUtil";
 
     private Context mContext;
+    private Activity activity;
+
     private ActionRepository mActionRepository;
     private GroupRepository mGroupRepository;
     private DebtRepository mDebtRepository;
+    private GroupFriendCrossRefRepository mGroupFriendCrossRefRepository;
+
+    private NavController navController;
 
     public ActivityGeneratorUtil(Context context) {
         this.mContext = context;
         this.mActionRepository = new ActionRepository(context);
         this.mGroupRepository = new GroupRepository(context);
         this.mDebtRepository = new DebtRepository(context);
+        this.mGroupFriendCrossRefRepository = new GroupFriendCrossRefRepository(context);
     }
 
     private void generateAction(String message) {
@@ -93,7 +106,7 @@ public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-//                undoDeleteOperation(group, debtList);
+                undoDeleteOperation(group, debtList);
             }
         });
 
@@ -104,16 +117,18 @@ public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener
     public void undoDeleteOperation(Group group, List<Debt> debts) {
         mGroupRepository.insertGroup(group, this);
         debts.forEach(p -> mDebtRepository.insertDebt(p, this));
+        debts.forEach(p -> { GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(p.groupId, p.friendDebtId);
+        mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend, this);});
 
+        navController = Navigation.findNavController(activity, R.id.nav_host_fragment);
+        navController.navigate(R.id.navigation_groups);
     }
 
     public void createSnackBar(View view, String message){
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
-
         View sView = snackbar.getView();
         TextView tv = (TextView) sView.findViewById(com.google.android.material.R.id.snackbar_text);
         tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-
         snackbar.show();
     }
 
@@ -132,5 +147,13 @@ public class ActivityGeneratorUtil implements OnActivityRepositoryActionListener
     @Override
     public void actionFailed(String message) {
 
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 }

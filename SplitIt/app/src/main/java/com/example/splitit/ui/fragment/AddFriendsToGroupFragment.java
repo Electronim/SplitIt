@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,7 +79,7 @@ public class AddFriendsToGroupFragment extends Fragment implements OnRepositoryA
 
         mFriendsRecyclerView = view.findViewById(R.id.add_friends_recycler_view);
         mFriendsRecyclerView.setHasFixedSize(true);
-        mFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mFriendsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         mContactAdapter = new ContactAdapter(new ArrayList<>(), getContext());
         mFriendsRecyclerView.setAdapter(mContactAdapter);

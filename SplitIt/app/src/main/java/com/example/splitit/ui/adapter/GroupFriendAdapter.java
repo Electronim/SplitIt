@@ -49,7 +49,7 @@ public class GroupFriendAdapter extends RecyclerView.Adapter<GroupFriendAdapter.
                 .filter(fwd -> fwd.groupId == mGroupId)
                 .mapToDouble(d -> d.amount)
                 .sum();
-        holder.friendAmount.setText(amount.toString());
+        holder.friendAmount.setText(amount == 0 ? "settled up" : " owes you RON" + String.format("%.2f", amount));
     }
 
     @Override
@@ -64,8 +64,8 @@ public class GroupFriendAdapter extends RecyclerView.Adapter<GroupFriendAdapter.
 
         public ViewHolder(@NonNull View itemView, OnGroupFriendLongClickListener onGroupFriendLongClickListener) {
             super(itemView);
-            this.friendName = itemView.findViewById(R.id.textView_groupFriend_name);
-            this.friendAmount = itemView.findViewById(R.id.textView_groupFriend_amount);
+            this.friendName = itemView.findViewById(R.id.textView_friend_group_name);
+            this.friendAmount = itemView.findViewById(R.id.textView_friend_group_amount);
             this.onGroupFriendLongClickListener = onGroupFriendLongClickListener;
             itemView.setOnLongClickListener(this);
         }

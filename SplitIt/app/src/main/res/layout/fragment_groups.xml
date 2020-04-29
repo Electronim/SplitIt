@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/primaryLightColor"
+    android:layout_margin="12dp">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/groups_recycler_view"
@@ -23,5 +25,5 @@
         app:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/groups_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/ic_group_add_black_24dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

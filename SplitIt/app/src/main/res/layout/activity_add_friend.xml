@@ -28,6 +28,8 @@
         android:layout_marginVertical="32dp"
         android:layout_marginBottom="64dp"
         android:text="@string/add_friends"
+        app:icon="@drawable/ic_person_add_white_24dp"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

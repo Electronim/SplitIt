@@ -18,7 +18,9 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -114,7 +116,7 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
 
         mGroupRecyclerView = view.findViewById(R.id.groups_recycler_view);
         mGroupRecyclerView.setHasFixedSize(true);
-        mGroupRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mGroupRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         mDebtRepository.getAllDebts(GroupsFragment.this);
 

@@ -24,15 +24,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.MainActivity;
 import com.example.splitit.R;
+import com.example.splitit.model.Action;
 import com.example.splitit.model.Debt;
 import com.example.splitit.model.Friend;
 import com.example.splitit.model.Group;
 import com.example.splitit.model.GroupFriendCrossRef;
 import com.example.splitit.model.GroupWithFriends;
+import com.example.splitit.model.wrappers.BackUpWrapper;
+import com.example.splitit.repository.ActionRepository;
 import com.example.splitit.repository.DebtRepository;
+import com.example.splitit.repository.FriendRepository;
 import com.example.splitit.repository.GroupFriendCrossRefRepository;
 import com.example.splitit.repository.GroupRepository;
 import com.example.splitit.repository.GroupWithFriendsRepository;
+import com.example.splitit.repository.OnActivityRepositoryActionListener;
 import com.example.splitit.repository.OnGroupRepositoryActionListener;
 import com.example.splitit.ui.activity.GroupInfoActivity;
 import com.example.splitit.ui.adapter.GroupAdapter;
@@ -40,6 +45,7 @@ import com.example.splitit.utils.ActivityGeneratorUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +53,7 @@ import java.util.stream.Collectors;
 
 
 public class GroupsFragment extends Fragment implements OnGroupRepositoryActionListener,
-        GroupAdapter.OnGroupListener, GroupAdapter.OnLongClickGroupListener {
+        GroupAdapter.OnGroupListener, GroupAdapter.OnLongClickGroupListener, OnActivityRepositoryActionListener {
     private static final String TAG = "GroupsFragment";
     public static final String GROUP_ID_EXTRA = "group_id";
     public static final String GROUP_NAME_EXTRA = "group_name";
@@ -56,11 +62,16 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
     private GroupAdapter mGroupAdapter;
     private FloatingActionButton mAddGroupFloatingButton;
 
+    private ActionRepository mActionRepository;
+    private FriendRepository mFriendRepository;
     private DebtRepository mDebtRepository;
     private GroupRepository mGroupRepository;
     private GroupWithFriendsRepository mGroupWithFriendsRepository;
     private GroupFriendCrossRefRepository mGroupFriendCrossRefRepository;
 
+    private List<Friend> friends = new ArrayList<>();
+    private List<Group> groups = new ArrayList<>();
+    private List<Action> actions = new ArrayList<>();
     List<Debt> allDebts = new ArrayList<>();
 
     @Override
@@ -79,11 +90,7 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back_up_button) {
-            try {
-                ((MainActivity) getActivity()).backUpData();
-            } catch (JSONException e) {
-                Log.i("REQUEST", "Failed to back up data");
-            }
+            backUpData();
         }
 
         return super.onOptionsItemSelected(item);
@@ -98,6 +105,8 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mActionRepository = new ActionRepository(getContext());
+        mFriendRepository = new FriendRepository(getContext());
         mDebtRepository = new DebtRepository(getContext());
         mGroupRepository = new GroupRepository(getContext());
         mGroupWithFriendsRepository = new GroupWithFriendsRepository(getContext());
@@ -117,6 +126,10 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
             showAddGroupDialog();
         });
 
+        mFriendRepository.getAllFriends(GroupsFragment.this);
+        mActionRepository.getAllActions(GroupsFragment.this);
+        mDebtRepository.getAllDebts(GroupsFragment.this);
+        mGroupRepository.getAllGroups(GroupsFragment.this);
         mGroupWithFriendsRepository.getAllGroupWithFriends(GroupsFragment.this);
     }
 
@@ -159,6 +172,19 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
         dialogBuilder.show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void backUpData() {
+
+        List<JSONObject> jsonFriends = friends.stream().map(Friend::toJson).collect(Collectors.toList());
+        List<JSONObject> jsonDebts = allDebts.stream().map(Debt::toJson).collect(Collectors.toList());
+        List<JSONObject> jsonGroups = groups.stream().map(Group::toJson).collect(Collectors.toList());
+        List<JSONObject> jsonActions = actions.stream().map(Action::toJson).collect(Collectors.toList());
+        BackUpWrapper backUpWrapper = new BackUpWrapper(jsonFriends, jsonDebts, jsonGroups, jsonActions);
+
+        ((MainActivity)getActivity()).sendPostRequest(backUpWrapper);
+
+    }
+
     @Override
     public void notifyGroupRecyclerView(List<GroupWithFriends> groupList) {
         List<GroupWithFriends> groupWithFriends = mGroupAdapter.getGroups();
@@ -174,13 +200,30 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
     }
 
     @Override
-    public void actionSuccess() {
+    public void getAllGroups(List<Group> groupList) {
+        groups.clear();
+        groups.addAll(groupList);
+    }
 
+    @Override
+    public void getAllActions(List<Action> actionsList) {
+        actions.clear();
+        actions.addAll(actionsList);
+    }
+
+    @Override
+    public void actionSuccess() {
     }
 
     @Override
     public void actionFailed(String message) {
 
+    }
+
+    @Override
+    public void getAllFriends(List<Friend> friendsList) {
+        friends.clear();
+        friends.addAll(friendsList);
     }
 
     @Override
@@ -229,5 +272,10 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
 
         mGroupRepository.getAllGroups(this);
         mGroupWithFriendsRepository.getAllGroupWithFriends(this);
+    }
+
+    @Override
+    public void processActionList(List<Action> actionList) {
+
     }
 }

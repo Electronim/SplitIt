@@ -15,7 +15,7 @@ public interface FriendDao {
     @Query("Select * from Friend")
     List<Friend> getAllFriends();
 
-    @Query("Select * from Friend where friend_id = :id limit 1")
+    @Query("Select * from Friend where friendId = :id limit 1")
     Friend getFriendById(long id);
 
     @Insert

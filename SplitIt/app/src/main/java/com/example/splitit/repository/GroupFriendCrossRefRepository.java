@@ -56,7 +56,7 @@ public class GroupFriendCrossRefRepository {
         @Override
         protected List<GroupFriendCrossRef> doInBackground(GroupFriendCrossRef... groupFriendCrossRefs) {
             GroupFriendCrossRef groupFriend = appDatabase.groupFriendCrossRefDao()
-                    .getGroupFriendById(groupFriendCrossRefs[0].group_id, groupFriendCrossRefs[0].friend_id);
+                    .getGroupFriendById(groupFriendCrossRefs[0].groupId, groupFriendCrossRefs[0].friendId);
             appDatabase.groupFriendCrossRefDao().deleteGroupFriend(groupFriend);
             return null;
         }

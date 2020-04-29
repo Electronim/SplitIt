@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -125,7 +124,7 @@ public class GroupInfoFragment extends Fragment implements
             for(FriendWithDebts friend: friendWithDebts) {
                 double amountPerFriend = amount / (friendWithDebts.size() + 1);
 
-                Debt newDebt = new Debt(friend.friend.id, mGroupId, amountPerFriend);
+                Debt newDebt = new Debt(friend.friend.friendId, mGroupId, amountPerFriend);
                 mDebtRepository.insertDebt(newDebt, this);
 
                 ActivityGeneratorUtil util = new ActivityGeneratorUtil(getContext());
@@ -150,13 +149,13 @@ public class GroupInfoFragment extends Fragment implements
         String friendName = "";
         double totalAmount = 0;
         for(FriendWithDebts friend: friendWithDebtsList) {
-            if (friend.friend.id != friendId) continue;
+            if (friend.friend.friendId != friendId) continue;
 
             for (Debt debt: friend.debts) {
                 if (debt.groupId != groupId) continue;
                 friendName = friend.friend.name;
                 totalAmount += debt.amount;
-                mDebtRepository.deleteDebt(debt.id, this);
+                mDebtRepository.deleteDebt(debt.debtId, this);
             }
         }
 
@@ -173,12 +172,12 @@ public class GroupInfoFragment extends Fragment implements
         List<FriendWithDebts> friendWithDebtsList = mGroupFriendAdapter.getFriends();
         String friendName = "";
         for(FriendWithDebts friend: friendWithDebtsList) {
-            if (friend.friend.id != friendId) continue;
+            if (friend.friend.friendId != friendId) continue;
 
             for (Debt debt: friend.debts) {
                 if (debt.groupId != groupId) continue;
                 friendName = friend.friend.name;
-                mDebtRepository.deleteDebt(debt.id, this);
+                mDebtRepository.deleteDebt(debt.debtId, this);
             }
         }
 

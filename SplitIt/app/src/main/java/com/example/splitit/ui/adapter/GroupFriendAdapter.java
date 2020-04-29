@@ -60,7 +60,7 @@ public class GroupFriendAdapter extends RecyclerView.Adapter<GroupFriendAdapter.
 
         holder.settleUp.setOnClickListener(v -> {
             Log.d(TAG, "ViewHolder: settle up clicked!");
-            long friendId = friendWithDebts.friend.id;
+            long friendId = friendWithDebts.friend.friendId;
             holder.onSettleUpClickListener.onClick(friendId, mGroupId);
         });
     }
@@ -91,7 +91,7 @@ public class GroupFriendAdapter extends RecyclerView.Adapter<GroupFriendAdapter.
 
         @Override
         public boolean onLongClick(View v) {
-            long friendId = mFriends.get(getAdapterPosition()).friend.id;
+            long friendId = mFriends.get(getAdapterPosition()).friend.friendId;
             onGroupFriendLongClickListener.onGroupFriendLongClick(friendId, mGroupId, v);
             return true;
         }

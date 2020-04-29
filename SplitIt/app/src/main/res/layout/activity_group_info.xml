@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 <!--    <fragment-->
-<!--        android:id="@+id/group_fragment"-->
+<!--        android:debtId="@+debtId/group_fragment"-->
 <!--        android:name="com.example.splitit.ui.fragment.GroupInfoFragment"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"-->

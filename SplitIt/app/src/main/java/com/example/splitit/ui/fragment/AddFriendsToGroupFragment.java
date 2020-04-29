@@ -8,14 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.R;
@@ -28,7 +26,6 @@ import com.example.splitit.model.wrappers.FriendsWithDebtsWrapper;
 import com.example.splitit.repository.DebtRepository;
 import com.example.splitit.repository.FriendRepository;
 import com.example.splitit.repository.GroupFriendCrossRefRepository;
-import com.example.splitit.repository.GroupWithFriendsRepository;
 import com.example.splitit.repository.OnRepositoryActionListener;
 import com.example.splitit.ui.activity.GroupInfoActivity;
 import com.example.splitit.ui.adapter.ContactAdapter;
@@ -109,10 +106,10 @@ public class AddFriendsToGroupFragment extends Fragment implements OnRepositoryA
                     .findFirst()
                     .get();
 
-            Debt debt = new Debt(friend.id, mGroupId, 0);
+            Debt debt = new Debt(friend.friendId, mGroupId, 0);
             mDebtRepository.insertDebt(debt, this);
 
-            GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(mGroupId, friend.id);
+            GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(mGroupId, friend.friendId);
             mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend, this);
 
 //            Toast.makeText(getActivity(), "The selected friends were added!", Toast.LENGTH_SHORT).show();

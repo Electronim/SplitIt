@@ -10,8 +10,8 @@ public class FriendWithDebts implements Serializable {
     @Embedded
     public Friend friend;
     @Relation(
-            parentColumn = "friend_id",
-            entityColumn = "friendId"
+            parentColumn = "friendId",
+            entityColumn = "friendDebtId"
     )
     public List<Debt> debts;
 }

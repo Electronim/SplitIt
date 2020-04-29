@@ -13,10 +13,10 @@ import java.util.List;
 @Dao
 public interface ActionDao {
 
-    @Query("Select * from Action")
+    @Query("Select * from `Action`")
     List<Action> getAllActions();
 
-    @Query("Select * from Action where action_id = :id limit 1")
+    @Query("Select * from `Action` where actionId = :id limit 1")
     Action getActionById(long id);
 
     @Insert

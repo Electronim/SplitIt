@@ -66,7 +66,7 @@
 
 
         <!--        <TextView-->
-        <!--            android:id="@+id/contact_phone_text_view"-->
+        <!--            android:debtId="@+debtId/contact_phone_text_view"-->
         <!--            android:layout_width="wrap_content"-->
         <!--            android:layout_height="wrap_content"-->
         <!--            android:layout_marginBottom="4dp"-->
@@ -77,15 +77,15 @@
         <!--            app:layout_constraintBottom_toBottomOf="parent"-->
         <!--            app:layout_constraintEnd_toEndOf="parent"-->
         <!--            app:layout_constraintHorizontal_bias="0.070"-->
-        <!--            app:layout_constraintStart_toEndOf="@+id/imageView"-->
-        <!--            app:layout_constraintTop_toBottomOf="@+id/textView_friend_name" />-->
+        <!--            app:layout_constraintStart_toEndOf="@+debtId/imageView"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+debtId/textView_friend_name" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
 
 <!--<androidx.cardview.widget.CardView-->
 <!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:id="@+id/card_view_action"-->
+<!--    android:debtId="@+debtId/card_view_action"-->
 <!--    android:layout_width="match_parent"-->
 <!--    android:layout_height="wrap_content"-->
 <!--    android:layout_gravity="center"-->
@@ -99,7 +99,7 @@
 <!--        android:layout_height="match_parent">-->
 
 <!--        <TextView-->
-<!--            android:id="@+id/textView_actionMessage"-->
+<!--            android:debtId="@+debtId/textView_actionMessage"-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
 <!--            android:layout_alignParentBottom="true"-->

@@ -61,7 +61,7 @@
 <!--<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
 <!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:id="@+id/card_view_group"-->
+<!--    android:debtId="@+debtId/card_view_group"-->
 <!--    android:layout_width="match_parent"-->
 <!--    android:layout_height="wrap_content"-->
 <!--    android:layout_gravity="center"-->
@@ -75,7 +75,7 @@
 <!--        android:layout_height="match_parent">-->
 
 <!--        <TextView-->
-<!--            android:id="@+id/textView_groupName"-->
+<!--            android:debtId="@+debtId/textView_groupName"-->
 <!--            android:layout_width="0dp"-->
 <!--            android:layout_height="wrap_content"-->
 <!--            android:layout_marginStart="16dp"-->
@@ -87,23 +87,23 @@
 <!--            android:text="group name "-->
 <!--            android:textSize="30sp"-->
 <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toStartOf="@+id/textView_nrGroupParticipants"-->
+<!--            app:layout_constraintEnd_toStartOf="@+debtId/textView_nrGroupParticipants"-->
 <!--            app:layout_constraintStart_toStartOf="parent"-->
 <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
 <!--        <TextView-->
-<!--            android:id="@+id/textView_nrGroupParticipants"-->
+<!--            android:debtId="@+debtId/textView_nrGroupParticipants"-->
 <!--            android:layout_width="50dp"-->
 <!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/textView_groupName"-->
+<!--            android:layout_below="@debtId/textView_groupName"-->
 <!--            android:layout_marginEnd="16dp"-->
 <!--            android:paddingLeft="10dp"-->
 <!--            android:paddingRight="10dp"-->
 <!--            android:text="nr"-->
 <!--            android:textSize="30sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/textView_groupName"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+debtId/textView_groupName"-->
 <!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/textView_groupName"-->
+<!--            app:layout_constraintTop_toTopOf="@+debtId/textView_groupName"-->
 <!--            app:layout_constraintVertical_bias="0.5" />-->
 
 <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->

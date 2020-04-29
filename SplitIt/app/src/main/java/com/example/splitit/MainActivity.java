@@ -1,7 +1,6 @@
 package com.example.splitit;
 
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -22,18 +18,15 @@ import com.example.splitit.controller.ApplicationController;
 import com.example.splitit.model.Action;
 import com.example.splitit.model.Debt;
 import com.example.splitit.model.Friend;
-import com.example.splitit.model.FriendWithDebts;
 import com.example.splitit.model.Group;
 import com.example.splitit.model.GroupFriendCrossRef;
 import com.example.splitit.model.wrappers.BackUpWrapper;
 import com.example.splitit.repository.ActionRepository;
 import com.example.splitit.repository.DebtRepository;
 import com.example.splitit.repository.FriendRepository;
-import com.example.splitit.repository.FriendWithDebtsRepository;
 import com.example.splitit.repository.GroupFriendCrossRefRepository;
 import com.example.splitit.repository.GroupRepository;
 import com.example.splitit.repository.OnActivityRepositoryActionListener;
-import com.example.splitit.repository.OnRepositoryActionListener;
 import com.example.splitit.utils.BroadcastReceiverUtil;
 import com.example.splitit.utils.RequestQueueHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -56,7 +49,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity implements OnActivityRepositoryActionListener {
     public static final int REQUEST_CODE=101;
@@ -145,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
                         Debt debt = gson.fromJson(debtList.getJSONObject(index).toString(), Debt.class);
                         debts.add(debt);
                         mDebtRepository.insertDebt(debt, MainActivity.this);
-                        Log.d("GetRequest", debt.friendId + " " + debt.groupId + " " + debt.amount);
+                        Log.d("GetRequest", debt.friendDebtId + " " + debt.groupId + " " + debt.amount);
                     }
 
                     JSONArray groupList = response.getJSONArray("groups");
@@ -163,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
                     }
 
                     for (Debt debt : debts){
-                        GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(debt.groupId, debt.friendId);
+                        GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(debt.groupId, debt.friendDebtId);
                         mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend, MainActivity.this);
                     }
                     Log.i("Sync", "The data are in sync now");

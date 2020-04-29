@@ -1,7 +1,6 @@
 package com.example.splitit.ui.adapter;
 
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +16,10 @@ import com.example.splitit.model.FriendWithDebts;
 
 import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
-
 public class GroupFriendAdapter extends RecyclerView.Adapter<GroupFriendAdapter.ViewHolder> {
     private ArrayList<FriendWithDebts> mFriends;
     private long mGroupId;
-    private OnSettleUpClickListener mOnSettleUpClickListener;
+    private OnItemsClickListener mOnItemsClickListener;
     private OnGroupFriendLongClickListener mOnGroupFriendLongClickListener;
 
     public ArrayList<FriendWithDebts> getFriends() {
@@ -31,11 +28,11 @@ public class GroupFriendAdapter extends RecyclerView.Adapter<GroupFriendAdapter.
 
     public GroupFriendAdapter(ArrayList<FriendWithDebts> mFriends, long mGroupId,
                               OnGroupFriendLongClickListener onGroupFriendLongClickListener,
-                              OnSettleUpClickListener onSettleUpClickListener) {
+                              OnItemsClickListener onItemsClickListener) {
         this.mFriends = mFriends;
         this.mGroupId = mGroupId;
         this.mOnGroupFriendLongClickListener = onGroupFriendLongClickListener;
-        this.mOnSettleUpClickListener = onSettleUpClickListener;
+        this.mOnItemsClickListener = onItemsClickListener;
     }
 
     @NonNull
@@ -43,7 +40,7 @@ public class GroupFriendAdapter extends RecyclerView.Adapter<GroupFriendAdapter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        View view = LayoutInflater.from(parent.getContext())
                .inflate(R.layout.view_group_friend, parent, false);
-        return new ViewHolder(view, mOnGroupFriendLongClickListener, mOnSettleUpClickListener);
+        return new ViewHolder(view, mOnGroupFriendLongClickListener, mOnItemsClickListener);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -59,9 +56,14 @@ public class GroupFriendAdapter extends RecyclerView.Adapter<GroupFriendAdapter.
         holder.friendAmount.setText(amount == 0 ? "settled up" : " owes you RON" + String.format("%.2f", amount));
 
         holder.settleUp.setOnClickListener(v -> {
-            Log.d(TAG, "ViewHolder: settle up clicked!");
             long friendId = friendWithDebts.friend.friendId;
-            holder.onSettleUpClickListener.onClick(friendId, mGroupId, v);
+            holder.onItemsClickListener.onClick(friendId, mGroupId, v);
+        });
+
+        holder.addExpense.setOnClickListener(v -> {
+            long friendId = friendWithDebts.friend.friendId;
+            String friendName = friendWithDebts.friend.name;
+            holder.onItemsClickListener.onAddExpenseClick(friendId, friendName);
         });
     }
 
@@ -74,16 +76,18 @@ public class GroupFriendAdapter extends RecyclerView.Adapter<GroupFriendAdapter.
         public TextView friendName;
         public TextView friendAmount;
         public ImageView settleUp;
-        public OnSettleUpClickListener onSettleUpClickListener;
+        public ImageView addExpense;
+        public OnItemsClickListener onItemsClickListener;
         public OnGroupFriendLongClickListener onGroupFriendLongClickListener;
 
-        public ViewHolder(@NonNull View itemView, OnGroupFriendLongClickListener onGroupFriendLongClickListener, OnSettleUpClickListener onSettleUpClickListener) {
+        public ViewHolder(@NonNull View itemView, OnGroupFriendLongClickListener onGroupFriendLongClickListener, OnItemsClickListener onItemsClickListener) {
             super(itemView);
             this.friendName = itemView.findViewById(R.id.textView_friend_group_name);
             this.friendAmount = itemView.findViewById(R.id.textView_friend_group_amount);
             this.settleUp = itemView.findViewById(R.id.image_view_settle_up);
+            this.addExpense = itemView.findViewById(R.id.image_view_add_expense_friend);
 
-            this.onSettleUpClickListener = onSettleUpClickListener;
+            this.onItemsClickListener = onItemsClickListener;
             this.onGroupFriendLongClickListener = onGroupFriendLongClickListener;
 
             itemView.setOnLongClickListener(this);
@@ -97,8 +101,9 @@ public class GroupFriendAdapter extends RecyclerView.Adapter<GroupFriendAdapter.
         }
     }
 
-    public interface OnSettleUpClickListener {
+    public interface OnItemsClickListener {
         void onClick(long friendId, long groupId, View v);
+        void onAddExpenseClick(long friendId, String friendName);
     }
 
     public interface OnGroupFriendLongClickListener {

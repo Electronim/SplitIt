@@ -32,6 +32,7 @@ import com.example.splitit.ui.activity.GroupInfoActivity;
 import com.example.splitit.ui.adapter.GroupFriendAdapter;
 import com.example.splitit.utils.ActivityGeneratorUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ import java.util.stream.Collectors;
 
 public class GroupInfoFragment extends Fragment implements
         OnFriendRepositoryActionListener,
-        GroupFriendAdapter.OnSettleUpClickListener,
+        GroupFriendAdapter.OnItemsClickListener,
         GroupFriendAdapter.OnGroupFriendLongClickListener {
     private static final String TAG = "GroupInfoActivity";
 
@@ -88,7 +89,7 @@ public class GroupInfoFragment extends Fragment implements
 
         mAddExpenseFloatingButton = view.findViewById(R.id.fab_expenses);
         mAddExpenseFloatingButton.setOnClickListener(v -> {
-            showAddExpenseDialog();
+            showAddExpensePerGroupDialog();
         });
 
         mAddFriendToGroupButton = view.findViewById(R.id.button_add_friend_to_group);
@@ -101,7 +102,7 @@ public class GroupInfoFragment extends Fragment implements
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void showAddExpenseDialog() {
+    private void showAddExpensePerGroupDialog() {
         final AlertDialog dialogBuilder = new AlertDialog.Builder(getContext()).create();
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_expense, null);
@@ -141,6 +142,50 @@ public class GroupInfoFragment extends Fragment implements
 
         dialogBuilder.setView(dialogView);
         dialogBuilder.show();
+    }
+
+    private void showAddExpensePerFriend(long friendId, String friendName) {
+        final AlertDialog dialogBuilder = new AlertDialog.Builder(getContext()).create();
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_add_expense, null);
+
+        final EditText expenseEditText = dialogView.findViewById(R.id.edit_text_expense);
+        final TextInputLayout textInputLayout = dialogView.findViewById(R.id.textField_expense);
+        textInputLayout.setHint(textInputLayout.getHint() + " for " + friendName);
+        Button submitButton = dialogView.findViewById(R.id.button_submit_expense);
+        Button cancelButton = dialogView.findViewById(R.id.button_cancel_expense);
+
+        submitButton.setOnClickListener(v -> {
+            String expense = expenseEditText.getText().toString();
+            double amount = 0;
+
+            try {
+                amount = Double.parseDouble(expense);
+            } catch (NumberFormatException e) {
+                amount = 0;
+            }
+
+            Debt debt = new Debt(friendId, mGroupId, amount);
+            mDebtRepository.insertDebt(debt, this);
+
+            ActivityGeneratorUtil util = new ActivityGeneratorUtil(getContext());
+            util.generateAddedExpenseAction(friendName, mGroupName, amount);
+
+            mFriendWithDebtsRepository.getAllFriendsWithDebts(this);
+            dialogBuilder.dismiss();
+        });
+
+        cancelButton.setOnClickListener(v -> {
+            dialogBuilder.dismiss();
+        });
+
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.show();
+    }
+
+    @Override
+    public void onAddExpenseClick(long friendId, String friendName) {
+        showAddExpensePerFriend(friendId, friendName);
     }
 
     @Override

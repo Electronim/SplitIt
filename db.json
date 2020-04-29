@@ -3,49 +3,350 @@
     "friends":[
       {
         "friendId":1,
-        "name":"Dan",
-        "phoneNumber":"079643241"
+        "name":"Darii Dan",
+        "phoneNumber":"0737943254"
       },
       {
         "friendId":2,
-        "name":"Sandu",
-        "phoneNumber":"0394543812"
+        "name":"Ermina",
+        "phoneNumber":"069272121"
+      },
+      {
+        "friendId":3,
+        "name":"Sanda Revenco",
+        "phoneNumber":"0738436069"
+      },
+      {
+        "friendId":4,
+        "name":"Soltan Gheorghe",
+        "phoneNumber":"0747 412 642"
+      },
+      {
+        "friendId":5,
+        "name":"Teodor Marchitan",
+        "phoneNumber":"0747217715"
+      },
+      {
+        "friendId":6,
+        "name":"Gîncota Nicolae",
+        "phoneNumber":"0741 488 771"
+      },
+      {
+        "friendId":7,
+        "name":"Valerian",
+        "phoneNumber":"0748759381"
+      },
+      {
+        "friendId":8,
+        "name":"Vișanu",
+        "phoneNumber":"0739 334 377"
+      },
+      {
+        "friendId":9,
+        "name":"Dan Guțu",
+        "phoneNumber":"0756834242"
       }
     ],
     "debts":[
       {
-        "debtId":1,
-        "friendDebtId":1,
-        "groupId":1,
-        "amount":50
+        "debtId":3,
+        "friendDebtId":4,
+        "groupId":2,
+        "amount":0
       },
       {
-        "debtId":2,
-        "friendDebtId":2,
+        "debtId":7,
+        "friendDebtId":4,
         "groupId":2,
-        "amount":101.1
+        "amount":200
+      },
+      {
+        "debtId":9,
+        "friendDebtId":5,
+        "groupId":2,
+        "amount":0
+      },
+      {
+        "debtId":10,
+        "friendDebtId":1,
+        "groupId":2,
+        "amount":0
+      },
+      {
+        "debtId":13,
+        "friendDebtId":4,
+        "groupId":3,
+        "amount":0
+      },
+      {
+        "debtId":15,
+        "friendDebtId":8,
+        "groupId":3,
+        "amount":0
+      },
+      {
+        "debtId":17,
+        "friendDebtId":4,
+        "groupId":3,
+        "amount":16.666666666666668
+      },
+      {
+        "debtId":19,
+        "friendDebtId":8,
+        "groupId":3,
+        "amount":16.666666666666668
+      },
+      {
+        "debtId":22,
+        "friendDebtId":4,
+        "groupId":3,
+        "amount":41.333333333333336
+      },
+      {
+        "debtId":24,
+        "friendDebtId":8,
+        "groupId":3,
+        "amount":41.333333333333336
+      },
+      {
+        "debtId":26,
+        "friendDebtId":9,
+        "groupId":3,
+        "amount":0
+      },
+      {
+        "debtId":27,
+        "friendDebtId":7,
+        "groupId":3,
+        "amount":0
+      },
+      {
+        "debtId":28,
+        "friendDebtId":1,
+        "groupId":3,
+        "amount":0
       }
     ],
     "groups":[
       {
-        "groupId":1,
-        "name":"Group1"
+        "groupId":2,
+        "name":"Vacanță"
       },
       {
-        "groupId":2,
-        "name":"Group2"
+        "groupId":3,
+        "name":"Bere"
       }
     ],
     "actions":[
       {
         "actionId":1,
-        "message":"action1",
-        "timestamp":1588025616655
+        "message":"The contact Darii Dan (0737943254) was added as friend",
+        "timestamp":1588140904203
       },
       {
         "actionId":2,
-        "message":"action2",
-        "timestamp":1588025616655
+        "message":"The contact Ermina (069272121) was added as friend",
+        "timestamp":1588140904204
+      },
+      {
+        "actionId":3,
+        "message":"The contact Sanda Revenco (0738436069) was added as friend",
+        "timestamp":1588140953569
+      },
+      {
+        "actionId":4,
+        "message":"The contact Soltan Gheorghe (0747 412 642) was added as friend",
+        "timestamp":1588140953569
+      },
+      {
+        "actionId":5,
+        "message":"The contact Teodor Marchitan (0747217715) was added as friend",
+        "timestamp":1588140953569
+      },
+      {
+        "actionId":6,
+        "message":"The contact Gîncota Nicolae (0741 488 771) was added as friend",
+        "timestamp":1588140969319
+      },
+      {
+        "actionId":7,
+        "message":"The group `Vacanță - 1 mai -` was created",
+        "timestamp":1588141014137
+      },
+      {
+        "actionId":8,
+        "message":"The group `Vacanță - 1 mai -` was deleted",
+        "timestamp":1588141022554
+      },
+      {
+        "actionId":9,
+        "message":"The group `Vacanță` was created",
+        "timestamp":1588141123519
+      },
+      {
+        "actionId":10,
+        "message":"Darii Dan was added to `Vacanță` group",
+        "timestamp":1588141153163
+      },
+      {
+        "actionId":11,
+        "message":"Ermina was added to `Vacanță` group",
+        "timestamp":1588141153163
+      },
+      {
+        "actionId":12,
+        "message":"Soltan Gheorghe was added to `Vacanță` group",
+        "timestamp":1588141153163
+      },
+      {
+        "actionId":13,
+        "message":"Teodor Marchitan was added to `Vacanță` group",
+        "timestamp":1588141153164
+      },
+      {
+        "actionId":14,
+        "message":"Darii Dan owes you RON200.00 in `Vacanță` group!",
+        "timestamp":1588141166945
+      },
+      {
+        "actionId":15,
+        "message":"Ermina owes you RON200.00 in `Vacanță` group!",
+        "timestamp":1588141166946
+      },
+      {
+        "actionId":16,
+        "message":"Soltan Gheorghe owes you RON200.00 in `Vacanță` group!",
+        "timestamp":1588141166946
+      },
+      {
+        "actionId":17,
+        "message":"Teodor Marchitan owes you RON200.00 in `Vacanță` group!",
+        "timestamp":1588141166946
+      },
+      {
+        "actionId":18,
+        "message":"Ermina was removed from `Vacanță` group",
+        "timestamp":1588141180570
+      },
+      {
+        "actionId":19,
+        "message":"You settled up with Teodor Marchitan in `Vacanță` group (RON200.00)",
+        "timestamp":1588141194289
+      },
+      {
+        "actionId":20,
+        "message":"You settled up with Darii Dan in `Vacanță` group (RON200.00)",
+        "timestamp":1588141200402
+      },
+      {
+        "actionId":21,
+        "message":"The group `Bere` was created",
+        "timestamp":1588141221738
+      },
+      {
+        "actionId":22,
+        "message":"The contact Valerian (0748759381) was added as friend",
+        "timestamp":1588141241256
+      },
+      {
+        "actionId":23,
+        "message":"The contact Vișanu (0739 334 377) was added as friend",
+        "timestamp":1588141241256
+      },
+      {
+        "actionId":24,
+        "message":"The contact Dan Guțu (0756834242) was added as friend",
+        "timestamp":1588141260299
+      },
+      {
+        "actionId":25,
+        "message":"Dan Guțu was added to `Bere` group",
+        "timestamp":1588141271986
+      },
+      {
+        "actionId":26,
+        "message":"Darii Dan was added to `Bere` group",
+        "timestamp":1588141271986
+      },
+      {
+        "actionId":27,
+        "message":"Soltan Gheorghe was added to `Bere` group",
+        "timestamp":1588141271986
+      },
+      {
+        "actionId":28,
+        "message":"Valerian was added to `Bere` group",
+        "timestamp":1588141271986
+      },
+      {
+        "actionId":29,
+        "message":"Vișanu was added to `Bere` group",
+        "timestamp":1588141271987
+      },
+      {
+        "actionId":30,
+        "message":"Darii Dan owes you RON16.67 in `Bere` group!",
+        "timestamp":1588141281735
+      },
+      {
+        "actionId":31,
+        "message":"Soltan Gheorghe owes you RON16.67 in `Bere` group!",
+        "timestamp":1588141281735
+      },
+      {
+        "actionId":32,
+        "message":"Valerian owes you RON16.67 in `Bere` group!",
+        "timestamp":1588141281736
+      },
+      {
+        "actionId":33,
+        "message":"Vișanu owes you RON16.67 in `Bere` group!",
+        "timestamp":1588141281736
+      },
+      {
+        "actionId":34,
+        "message":"Dan Guțu owes you RON16.67 in `Bere` group!",
+        "timestamp":1588141281736
+      },
+      {
+        "actionId":35,
+        "message":"Darii Dan owes you RON41.33 in `Bere` group!",
+        "timestamp":1588141298763
+      },
+      {
+        "actionId":36,
+        "message":"Soltan Gheorghe owes you RON41.33 in `Bere` group!",
+        "timestamp":1588141298763
+      },
+      {
+        "actionId":37,
+        "message":"Valerian owes you RON41.33 in `Bere` group!",
+        "timestamp":1588141298764
+      },
+      {
+        "actionId":38,
+        "message":"Vișanu owes you RON41.33 in `Bere` group!",
+        "timestamp":1588141298764
+      },
+      {
+        "actionId":39,
+        "message":"Dan Guțu owes you RON41.33 in `Bere` group!",
+        "timestamp":1588141298764
+      },
+      {
+        "actionId":40,
+        "message":"You settled up with Dan Guțu in `Bere` group (RON58.00)",
+        "timestamp":1588141340481
+      },
+      {
+        "actionId":41,
+        "message":"You settled up with Valerian in `Bere` group (RON58.00)",
+        "timestamp":1588141344046
+      },
+      {
+        "actionId":42,
+        "message":"You settled up with Darii Dan in `Bere` group (RON58.00)",
+        "timestamp":1588141345343
       }
     ]
   }

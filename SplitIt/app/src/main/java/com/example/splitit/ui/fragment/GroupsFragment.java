@@ -45,6 +45,7 @@ import com.example.splitit.ui.activity.GroupInfoActivity;
 import com.example.splitit.ui.adapter.GroupAdapter;
 import com.example.splitit.utils.ActivityGeneratorUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -125,7 +126,7 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
 
         mAddGroupFloatingButton = view.findViewById(R.id.fab_groups);
         mAddGroupFloatingButton.setOnClickListener(v -> {
-            showAddGroupDialog();
+            showAddGroupDialog(view);
         });
 
         mFriendRepository.getAllFriends(GroupsFragment.this);
@@ -142,7 +143,7 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
         mGroupWithFriendsRepository.getAllGroupWithFriends(GroupsFragment.this);
     }
 
-    private void showAddGroupDialog() {
+    private void showAddGroupDialog(View view) {
         final AlertDialog dialogBuilder = new AlertDialog.Builder(getContext()).create();
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_add_group, null);
@@ -160,6 +161,7 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
 
                 ActivityGeneratorUtil util = new ActivityGeneratorUtil(getContext());
                 util.generateCreatedGroupAction(newGroup);
+                util.createSnackBar(view, "The group '" + groupName + "' has been added");
             }
 
             mGroupWithFriendsRepository.getAllGroupWithFriends(GroupsFragment.this);
@@ -238,13 +240,13 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onGroupLongClick(long groupId) {
+    public void onGroupLongClick(long groupId, View view) {
         List<GroupWithFriends> groupWithFriends = mGroupAdapter.getGroups();
 
         String groupName = "";
+        ArrayList<Debt> debts = new ArrayList<>();
         for (GroupWithFriends group: groupWithFriends) {
             if (group.group.id != groupId) continue;
-
             groupName = group.group.name;
             for (Friend friend: group.friends) {
                 if (allDebts.stream().noneMatch(d -> d.groupId == groupId && d.friendId == friend.id)) {
@@ -252,7 +254,7 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
                 }
 
                 // delete all friend's debts
-                ArrayList<Debt> debts = allDebts
+                debts = allDebts
                         .stream()
                         .filter(d -> d.groupId == groupId && d.friendId == friend.id)
                         .collect(Collectors.toCollection(ArrayList::new));
@@ -270,6 +272,14 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
 
             ActivityGeneratorUtil util = new ActivityGeneratorUtil(getContext());
             util.generateDeletedGroupAction(new Group(groupName));
+            Group group = new Group(groupName);
+            group.setId(groupId);
+            util.createSnackBar(view, "The group '" + groupName + "' has been deleted", debts, group);
+//            if (undoDelete){
+//                mGroupRepository.insertGroup(group, this);
+//                debts.forEach(p -> mDebtRepository.insertDebt(p, this));
+//            }
+
         }
 
         mGroupRepository.getAllGroups(this);

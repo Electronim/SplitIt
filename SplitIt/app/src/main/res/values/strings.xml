@@ -18,4 +18,5 @@
     <string name="notif_title_backup_failed">Backup failed</string>
     <string name="notif_message_backup_failed">Failed to sync your data</string>
     <string name="notif_message_backup_succeed">Your data are in sync</string>
+    <string name="action_delete_group">Group has been deleted</string>
 </resources>

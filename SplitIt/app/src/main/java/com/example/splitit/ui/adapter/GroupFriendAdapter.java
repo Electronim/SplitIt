@@ -73,12 +73,12 @@ public class GroupFriendAdapter extends RecyclerView.Adapter<GroupFriendAdapter.
         @Override
         public boolean onLongClick(View v) {
             long friendId = mFriends.get(getAdapterPosition()).friend.id;
-            onGroupFriendLongClickListener.onGroupFriendLongClick(friendId, mGroupId);
+            onGroupFriendLongClickListener.onGroupFriendLongClick(friendId, mGroupId, v);
             return true;
         }
     }
 
     public interface OnGroupFriendLongClickListener {
-        void onGroupFriendLongClick(long friendId, long groupId);
+        void onGroupFriendLongClick(long friendId, long groupId, View v);
     }
 }

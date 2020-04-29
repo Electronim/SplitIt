@@ -20,7 +20,7 @@
         "amount":50
       },
       {
-        "debtId":2
+        "debtId":2,
         "friendDebtId":2,
         "groupId":2,
         "amount":101.1
@@ -28,11 +28,11 @@
     ],
     "groups":[
       {
-        "groupId":1
+        "groupId":1,
         "name":"Group1"
       },
       {
-        "groupId":2
+        "groupId":2,
         "name":"Group2"
       }
     ],

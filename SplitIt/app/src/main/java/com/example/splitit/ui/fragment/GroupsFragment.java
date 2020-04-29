@@ -266,14 +266,11 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
             mGroupRepository.deleteGroup(groupId, this);
 
             ActivityGeneratorUtil util = new ActivityGeneratorUtil(getContext());
+            util.setActivity(getActivity());
             util.generateDeletedGroupAction(new Group(groupName));
             Group group = new Group(groupName);
             group.setGroupId(groupId);
             util.createSnackBar(view, "The group '" + groupName + "' has been deleted", debts, group);
-//            if (undoDelete){
-//                mGroupRepository.insertGroup(group, this);
-//                debts.forEach(p -> mDebtRepository.insertDebt(p, this));
-//            }
 
         }
 

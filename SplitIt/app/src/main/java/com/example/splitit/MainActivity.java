@@ -22,11 +22,15 @@ import com.example.splitit.controller.ApplicationController;
 import com.example.splitit.model.Action;
 import com.example.splitit.model.Debt;
 import com.example.splitit.model.Friend;
+import com.example.splitit.model.FriendWithDebts;
 import com.example.splitit.model.Group;
+import com.example.splitit.model.GroupFriendCrossRef;
 import com.example.splitit.model.wrappers.BackUpWrapper;
 import com.example.splitit.repository.ActionRepository;
 import com.example.splitit.repository.DebtRepository;
 import com.example.splitit.repository.FriendRepository;
+import com.example.splitit.repository.FriendWithDebtsRepository;
+import com.example.splitit.repository.GroupFriendCrossRefRepository;
 import com.example.splitit.repository.GroupRepository;
 import com.example.splitit.repository.OnActivityRepositoryActionListener;
 import com.example.splitit.repository.OnRepositoryActionListener;
@@ -60,14 +64,9 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
     DebtRepository mDebtRepository;
     GroupRepository mGroupRepository;
     ActionRepository mActionRepository;
+    GroupFriendCrossRefRepository mGroupFriendCrossRefRepository;
 
     NavController navController;
-
-    private List<Friend> friends = new ArrayList<>();
-    private List<Group> groups = new ArrayList<>();
-    private List<Action> actions = new ArrayList<>();
-    private List<Debt> debts = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
         mDebtRepository = new DebtRepository(MainActivity.this);
         mGroupRepository = new GroupRepository(MainActivity.this);
         mActionRepository = new ActionRepository(MainActivity.this);
-
+        mGroupFriendCrossRefRepository = new GroupFriendCrossRefRepository(MainActivity.this);
 
         getSharedPref();
     }
@@ -134,10 +133,13 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
             @Override
             public void onResponse(JSONObject response) {
                 Gson gson = new Gson();
+                List<Friend> friends = new ArrayList<>();
+                List<Debt> debts = new ArrayList<>();
                 try {
                     JSONArray friendList = response.getJSONArray("friends");
                     for (int index = 0; index < friendList.length(); index++) {
                         Friend friend = gson.fromJson(friendList.getJSONObject(index).toString(), Friend.class);
+                        friends.add(friend);
                         mFriendRepository.insertFriend(friend, MainActivity.this);
                         Log.d("GetRequest", friend.name + " " + friend.phoneNumber);
                     }
@@ -145,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
                     JSONArray debtList = response.getJSONArray("debts");
                     for (int index = 0; index < debtList.length(); index++) {
                         Debt debt = gson.fromJson(debtList.getJSONObject(index).toString(), Debt.class);
+                        debts.add(debt);
                         mDebtRepository.insertDebt(debt, MainActivity.this);
                         Log.d("GetRequest", debt.friendId + " " + debt.groupId + " " + debt.amount);
                     }
@@ -163,6 +166,17 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
                         Log.d("GetRequest", action.message + " " + action.timestamp);
                     }
 
+                    for (Friend friend : friends){
+                        for (Debt debt : debts){
+                            if (debt.friendId == friend.id){
+                                GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(debt.groupId, debt.friendId);
+                                mGroupFriendCrossRefRepository.insertGroupFriend(groupFriend, MainActivity.this);
+                                debts.remove(debt);
+                            }
+                        }
+                    }
+                    Log.i("Sync", "The data are in sync now");
+
                 } catch (JSONException ex) {
                     ex.printStackTrace();
                 }
@@ -176,48 +190,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
             });
 
         RequestQueueHelper.getRequestQueueHelperInstance(MainActivity.this).addToRequestQueue(jsonObjectRequest);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void backUpData() throws JSONException {
-//        Friend friend1 = new Friend("Dan", "079643241");
-//        Friend friend2 = new Friend("Sandu", "0394543812");
-//
-//        Debt debt1 = new Debt(1, 1, 50);
-//        Debt debt2 = new Debt(2,2,101.1);
-//
-//        Group group1 = new Group("Group1");
-//        Group group2 = new Group("Group2");
-//
-//        Action action1 = new Action("action1", System.currentTimeMillis());
-//        Action action2 = new Action("action2", System.currentTimeMillis());
-//
-//        List<JSONObject> friends = new ArrayList<>();
-//        friends.add(friend1.toJson());
-//        friends.add(friend2.toJson());
-//
-//        List<JSONObject> debts = new ArrayList<>();
-//        debts.add(debt1.toJson());
-//        debts.add(debt2.toJson());
-//
-//        List<JSONObject> groups = new ArrayList<>();
-//        groups.add(group1.toJson());
-//        groups.add(group2.toJson());
-//
-//        List<JSONObject> actions = new ArrayList<>();
-//        actions.add(action1.toJson());
-//        actions.add(action2.toJson())
-//
-//        BackUpWrapper backUpWrapper = new BackUpWrapper(friends, debts, groups, actions);
-
-        List<JSONObject> jsonFriends = friends.stream().map(Friend::toJson).collect(Collectors.toList());
-        List<JSONObject> jsonDebts = debts.stream().map(Debt::toJson).collect(Collectors.toList());
-        List<JSONObject> jsonGroups = groups.stream().map(Group::toJson).collect(Collectors.toList());
-        List<JSONObject> jsonActions = actions.stream().map(Action::toJson).collect(Collectors.toList());
-        BackUpWrapper backUpWrapper = new BackUpWrapper(jsonFriends, jsonDebts, jsonGroups, jsonActions);
-
-        sendPostRequest(backUpWrapper);
-
     }
 
     public void sendPostRequest(BackUpWrapper backUpWrapper) {
@@ -279,25 +251,6 @@ public class MainActivity extends AppCompatActivity implements OnActivityReposit
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, 100, pendingIntent);
     }
 
-    @Override
-    public void getAllFriends(List<Friend> friendsList) {
-        friends.addAll(friendsList);
-    }
-
-    @Override
-    public void getAllDebts(List<Debt> debtsList) {
-        debts.addAll(debtsList);
-    }
-
-    @Override
-    public void getAllGroups(List<Group> groupList) {
-        groups.addAll(groupList);
-    }
-
-    @Override
-    public void getAllActions(List<Action> actionsList) {
-        actions.addAll(actionsList);
-    }
 
     @Override
     public void actionSuccess() {

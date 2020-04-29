@@ -75,12 +75,12 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
         @Override
         public void onClick(View v) {
             Group group = mGroups.get(getAdapterPosition()).group;
-            onGroupListener.onGroupClick(group.id, group.name);
+            onGroupListener.onGroupClick(group.groupId, group.name);
         }
 
         @Override
         public boolean onLongClick(View v) {
-            long groupId = mGroups.get(getAdapterPosition()).group.id;
+            long groupId = mGroups.get(getAdapterPosition()).group.groupId;
             onLongClickGroupListener.onGroupLongClick(groupId, v);
             return true;
         }

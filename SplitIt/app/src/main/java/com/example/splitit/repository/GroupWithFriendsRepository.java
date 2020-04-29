@@ -47,8 +47,8 @@ public class GroupWithFriendsRepository {
         }
     }
 
-//    public void getGroupWithFriendsById(Long id, final OnGroupFriendRepositoryActionListener listener){
-//        new GetGroupWithFriendsById(listener).execute(id);
+//    public void getGroupWithFriendsById(Long debtId, final OnGroupFriendRepositoryActionListener listener){
+//        new GetGroupWithFriendsById(listener).execute(debtId);
 //    }
 //
 //    private class GetGroupWithFriendsById extends AsyncTask<Long, Void, GroupWithFriends> {
@@ -68,7 +68,7 @@ public class GroupWithFriendsRepository {
 //            super.onPostExecute(groupWithFriends);
 //            listener.actionSuccess();
 //
-//            List<Long> resultList = groupWithFriends.friends.stream().map(gwf -> gwf.id).collect(Collectors.toList());
+//            List<Long> resultList = groupWithFriends.friends.stream().map(gwf -> gwf.debtId).collect(Collectors.toList());
 //            listener.notifyGroupFriendRecyclerView(resultList);
 //        }
 //    }

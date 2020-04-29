@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,10 +17,8 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.splitit.MainActivity;
@@ -45,9 +42,7 @@ import com.example.splitit.ui.activity.GroupInfoActivity;
 import com.example.splitit.ui.adapter.GroupAdapter;
 import com.example.splitit.utils.ActivityGeneratorUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -58,7 +53,7 @@ import java.util.stream.Collectors;
 public class GroupsFragment extends Fragment implements OnGroupRepositoryActionListener,
         GroupAdapter.OnGroupListener, GroupAdapter.OnLongClickGroupListener, OnActivityRepositoryActionListener {
     private static final String TAG = "GroupsFragment";
-    public static final String GROUP_ID_EXTRA = "group_id";
+    public static final String GROUP_ID_EXTRA = "groupId";
     public static final String GROUP_NAME_EXTRA = "group_name";
 
     private RecyclerView mGroupRecyclerView;
@@ -246,23 +241,23 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
         String groupName = "";
         ArrayList<Debt> debts = new ArrayList<>();
         for (GroupWithFriends group: groupWithFriends) {
-            if (group.group.id != groupId) continue;
+            if (group.group.groupId != groupId) continue;
             groupName = group.group.name;
             for (Friend friend: group.friends) {
-                if (allDebts.stream().noneMatch(d -> d.groupId == groupId && d.friendId == friend.id)) {
+                if (allDebts.stream().noneMatch(d -> d.groupId == groupId && d.friendDebtId == friend.friendId)) {
                     continue;
                 }
 
                 // delete all friend's debts
                 debts = allDebts
                         .stream()
-                        .filter(d -> d.groupId == groupId && d.friendId == friend.id)
+                        .filter(d -> d.groupId == groupId && d.friendDebtId == friend.friendId)
                         .collect(Collectors.toCollection(ArrayList::new));
 
-                debts.forEach(d -> mDebtRepository.deleteDebt(d.id, this));
+                debts.forEach(d -> mDebtRepository.deleteDebt(d.debtId, this));
 
                 // delete group ~ friend relation
-                GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(groupId, friend.id);
+                GroupFriendCrossRef groupFriend = new GroupFriendCrossRef(groupId, friend.friendId);
                 mGroupFriendCrossRefRepository.deleteGroupFriend(groupFriend, this);
             }
         }
@@ -273,7 +268,7 @@ public class GroupsFragment extends Fragment implements OnGroupRepositoryActionL
             ActivityGeneratorUtil util = new ActivityGeneratorUtil(getContext());
             util.generateDeletedGroupAction(new Group(groupName));
             Group group = new Group(groupName);
-            group.setId(groupId);
+            group.setGroupId(groupId);
             util.createSnackBar(view, "The group '" + groupName + "' has been deleted", debts, group);
 //            if (undoDelete){
 //                mGroupRepository.insertGroup(group, this);

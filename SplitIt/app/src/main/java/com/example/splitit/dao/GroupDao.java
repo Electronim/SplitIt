@@ -14,7 +14,7 @@ public interface GroupDao {
     @Query("Select * from Groups")
     List<Group> getAllGroups();
 
-    @Query("Select * from Groups where group_id = :id limit 1")
+    @Query("Select * from Groups where groupId = :id limit 1")
     Group getGroupById(long id);
 
     @Insert

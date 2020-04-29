@@ -16,6 +16,6 @@ public interface GroupWithFriendsDao {
     List<GroupWithFriends> getAllGroupsWithFriends();
 
     @Transaction
-    @Query("Select * from Groups where group_id = :id limit 1")
+    @Query("Select * from Groups where groupId = :id limit 1")
     GroupWithFriends getGroupWithFriendsById(long id);
 }
